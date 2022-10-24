@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ConfigurationController;
@@ -20,13 +21,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return inertia('Welcome', props:['title'=>'edgar']);
-});
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return inertia('Welcome', props: ['title' => 'edgar']);
+    });
 
+    Route::get('agenda', [AgendaController::class, 'index'])->name('agenda.index');
 
-
-Route::group([], function () {
     Route::resources([
         'configurations' => ConfigurationController::class,
         'opening-hours'  => OpeningHourController::class,
@@ -37,4 +38,3 @@ Route::group([], function () {
     ]);
     UserRoute::routes();
 });
-
