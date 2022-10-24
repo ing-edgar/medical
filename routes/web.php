@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\OpeningHourController;
+use App\Http\Controllers\WeekdayController;
+use App\Services\UserRoute;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +23,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return inertia('Welcome', props:['title'=>'edgar']);
 });
+
+
+
+Route::group([], function () {
+    Route::resources([
+        'configurations' => ConfigurationController::class,
+        'opening-hours'  => OpeningHourController::class,
+        'appointments'   => AppointmentController::class,
+        'articles'       => ArticleController::class,
+        'events'         => EventController::class,
+        'weekdays'         => WeekdayController::class,
+    ]);
+    UserRoute::routes();
+});
+

@@ -9,5 +9,5 @@
 
 <Main>
     <div slot="title">Dashboard</div>
-    <h1 class="text-red-600">Hola mundo {title}</h1>
+    <h1 class="text-red-600">Página en construcción</h1>
 </Main>
