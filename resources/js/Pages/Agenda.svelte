@@ -1,6 +1,6 @@
 <script>
     import Calendar from "../components/admin/agenda/calendar.svelte";
-import CalendarActions from "../components/admin/agenda/calendar_actions.svelte";
+    import CalendarActions from "../components/admin/agenda/calendar_actions.svelte";
     import Main from "../components/admin/layout/Main.svelte";
 </script>
 
@@ -10,5 +10,5 @@ import CalendarActions from "../components/admin/agenda/calendar_actions.svelte"
 
 <Main>
     <div slot="title">Agenda</div>
-    <Calendar></Calendar>
+    <Calendar />
 </Main>

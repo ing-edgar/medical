@@ -1,6 +1,5 @@
 <script>
     import Main from "../components/admin/layout/Main.svelte";
-    export let title;
 </script>
 
 <svelte:head>
