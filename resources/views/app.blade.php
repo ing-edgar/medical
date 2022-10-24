@@ -1,3 +1,4 @@
+<?php echo app('Tightenco\Ziggy\BladeRouteGenerator')->generate(); ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -20,7 +21,6 @@
 </head>
 
 <body class="antialiased">
-    @routes
     @inertia
     @vite('resources/js/app.js')
 </body>
