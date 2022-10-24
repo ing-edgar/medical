@@ -25,7 +25,7 @@
         >
             <ul class="text-right">
                 <li class="hover:bg-pink-100 p-2 rounded-full">
-                    <a href={"#"} on:click={() => click("OpeningHours", true)}>
+                    <a href={"#"} on:click={() => click("OpeningHoursIndex", true)}>
                         Horario de atención
                     </a>
                 </li>
