@@ -1,33 +1,56 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app.76f2eee1.js",
+    "file": "assets/app.c2b9a7c6.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
+      "resources/js/Pages/Agenda.svelte",
       "resources/js/Pages/Welcome.svelte"
     ],
     "css": [
-      "assets/app.39b99e95.css"
+      "assets/app.32df96e3.css"
     ]
   },
-  "resources/js/Pages/Welcome.svelte": {
-    "file": "assets/Welcome.cfe3627b.js",
-    "src": "resources/js/Pages/Welcome.svelte",
+  "resources/js/Pages/Agenda.svelte": {
+    "file": "assets/Agenda.49b88e34.js",
+    "src": "resources/js/Pages/Agenda.svelte",
     "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Main.394df8d9.js"
+    ],
+    "css": [
+      "assets/Agenda.a47bdfc7.css"
+    ]
+  },
+  "_Main.394df8d9.js": {
+    "file": "assets/Main.394df8d9.js",
     "imports": [
       "resources/js/app.js"
     ],
     "css": [
-      "assets/Welcome.95b16411.css"
+      "assets/Main.95b16411.css"
     ]
   },
-  "resources/js/Pages/Welcome.css": {
-    "file": "assets/Welcome.95b16411.css",
-    "src": "resources/js/Pages/Welcome.css"
+  "resources/js/Pages/Welcome.svelte": {
+    "file": "assets/Welcome.f69cb2f1.js",
+    "src": "resources/js/Pages/Welcome.svelte",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Main.394df8d9.js"
+    ]
   },
-  "resources/css/app.css": {
-    "file": "assets/app.39b99e95.css",
-    "src": "resources/css/app.css",
-    "isEntry": true
+  "resources/js/Pages/Agenda.css": {
+    "file": "assets/Agenda.a47bdfc7.css",
+    "src": "resources/js/Pages/Agenda.css"
+  },
+  "Main.css": {
+    "file": "assets/Main.95b16411.css",
+    "src": "Main.css"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app.32df96e3.css",
+    "src": "resources/js/app.css"
   }
 }
