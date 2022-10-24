@@ -9,7 +9,7 @@ export const storeOpeningHours = writable({
 // Método que permite obtener una colección de horarios de atención.
 export const list = async (id) => {
     try {
-        const response = await API.get(`opening-hours?user_id=${id}`);
+        const response = await API.get(`/opening-hours?user_id=${id}`);
         return response;
     } catch (error) {
         return error;

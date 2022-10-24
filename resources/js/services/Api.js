@@ -1,6 +1,6 @@
 // Create a instance of axios to use the same base url.
 const axiosAPI = axios.create({
-  baseURL: "http://pruebas.enoecruzneuro.com.mx/admin" // it's not recommended to have this info here.
+  baseURL: import.meta.env.VITE_APP_URL+'/admin' // it's not recommended to have this info here.
 });
 
 // implement a method to execute all the request from here.
