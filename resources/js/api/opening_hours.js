@@ -1,5 +1,6 @@
 import API from "../services/Api";
 import { writable } from 'svelte/store';
+import { faRoute } from "@fortawesome/free-solid-svg-icons";
 
 export const storeOpeningHours = writable({
     selected_weekdays: [], //union ids
@@ -9,7 +10,10 @@ export const storeOpeningHours = writable({
 // Método que permite obtener una colección de horarios de atención.
 export const list = async (id) => {
     try {
-        const response = await API.get(`/opening-hours?user_id=${id}`);
+
+        const response = await API.get(route('opening-hours.index', {
+            user_id: id
+        }));
         return response;
     } catch (error) {
         return error;
