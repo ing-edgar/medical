@@ -5,9 +5,9 @@
     import { components } from "../services/components";
     let open = false;
     let component = null;
+    
     function openLayout(event) {
         open = event.detail.open;
-        console.log(event.detail.open);
         if (!(event.detail.componentName)) return;
         component = components.find(
             (component) => component.name === event.detail.componentName
