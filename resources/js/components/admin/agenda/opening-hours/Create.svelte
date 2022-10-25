@@ -22,6 +22,8 @@
         intervals: [],
     };
 
+    let request = {};
+
     function click(componentName, open) {
         dispatch("click", { componentName, open });
     }
@@ -85,8 +87,14 @@
                 if (openingHours.selected_weekdays <= 0) {
                     openingHours.intervals = [];
                 }
+                request.status = response.status;
+                request.message = response.data;
             })
-            .catch((error) => {});
+            .catch((error) => {
+                request.status = response.status;
+                request.message = "Por favor, corrige los siguientes errores";
+                request.data = Object.entries(error.data.errors);
+            });
     }
 
     function buildOpeningHours() {
@@ -160,7 +168,7 @@
     </ToolbarModal>
 
     <div class="py-2">
-        <Messages />
+        <Messages {request} />
     </div>
     {#if openingHours.weekdays.length > 0}
         <div id="workdays" class="flex space-x-2 ">

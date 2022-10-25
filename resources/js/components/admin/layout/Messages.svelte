@@ -4,7 +4,7 @@
     export let request = {
         status: 0,
         message: "",
-        errors: "",
+        data: [],
     };
 </script>
 
@@ -16,8 +16,8 @@
     >
         {request.message}
 
-        {#if request.errors}
-            <Error errors={request.errors} />
+        {#if request.data}
+            <Error errors={request.data} />
         {/if}
     </div>
 {/if}

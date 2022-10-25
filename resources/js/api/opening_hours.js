@@ -23,7 +23,7 @@ export const list = async (id) => {
 export const save = async (values) => {
     try {
 
-        const response = API.post(route('opening-hours.save'), {
+        const response = API.post(route('opening-hours.store'), {
             user_id: values.user_id,
             openingHours: values.openingHoursAttr,
             deleted_weekdays: values.deleted_weekdays,
