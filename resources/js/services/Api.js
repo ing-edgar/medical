@@ -1,7 +1,5 @@
 // Create a instance of axios to use the same base url.
-const axiosAPI = axios.create({
-  baseURL: import.meta.env.VITE_APP_URL+'/admin' // it's not recommended to have this info here.
-});
+const axiosAPI = axios.create();
 
 // implement a method to execute all the request from here.
 const apiRequest = async (method, url, request) => {

@@ -8,14 +8,21 @@
     onMount(() => openComponent("ShowOpeningHours"));
 
     function openComponent(componentName) {
+        click({
+            detail: {
+                componentName,
+            },
+        });
+    }
+
+    function click(event) {
+        console.log(event);
         component = components.find(
-            (component) => component.name === componentName
+            (component) => component.name === event.detail.componentName
         ).component;
     }
 </script>
 
-{#if open}
-    <Modal>
-        <svelte:component this={component} on:click />
-    </Modal>
-{/if}
+<Modal>
+    <svelte:component this={component} on:click={click} />
+</Modal>

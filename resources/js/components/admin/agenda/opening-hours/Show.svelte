@@ -8,11 +8,17 @@
         faPenToSquare,
     } from "@fortawesome/free-solid-svg-icons";
 
-    import { storeOpeningHours, list, findIndex } from "../../../../api/opening_hours";
+    import {
+        storeOpeningHours,
+        list,
+        findIndex,
+    } from "../../../../api/opening_hours";
 
     // Es un arreglo que contiene objetos de los horarios de atención de
     // los días de la semana.
     let openingHours = [];
+
+    const dispatch = createEventDispatcher();
 
     onMount(() => getOpeningHours());
 
@@ -26,7 +32,7 @@
         if (response.status > 300) {
         }
 
-        console.log(response)
+        console.log(response);
         buildOfficeHour(response.data);
     }
 
@@ -86,18 +92,27 @@
         click("CreateOpeningHours", true);
     }
 
-    function click(nestedComponent, open) {
-        dispatch("click", { nestedComponent, open });
+    function click(componentName, open) {
+        dispatch("click", { componentName, open });
     }
-
 </script>
 
 <ToolbarModal>
-    <button class="text-blue-600" slot="left-actions">
+    <button
+        class="text-sky-600"
+        slot="left-actions"
+        on:click={() => click(null, false)}
+    >
         <Fa icon={faXmark} />
     </button>
     <div slot="modal-title">Horario de atención</div>
-    <div slot="right-actions">Horario de atención</div>
+    <button
+        slot="right-actions"
+        class="text-sky-600"
+        on:click={() => click("CreateOpeningHours", true)}
+    >
+        <Fa icon={faPlus} />
+    </button>
 </ToolbarModal>
 <div>
     {#each openingHours as openingHour}
@@ -124,7 +139,9 @@
                 </div>
 
                 {#each openingHour.value as value}
-                    <div class="text-left">{value.start_time} - {value.end_time}</div>
+                    <div class="text-left">
+                        {value.start_time} - {value.end_time}
+                    </div>
                 {/each}
             </div>
         {/if}

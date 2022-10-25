@@ -1,6 +1,6 @@
 import OpeningHoursIndex from '../components/admin/agenda/opening-hours/Index.svelte';
 import ShowOpeningHours from '../components/admin/agenda/opening-hours/Show.svelte'
-//import CreateOpeningHours from '$lib/components/agenda/opening-hours/create.svelte';
+import CreateOpeningHours from '../components/admin/agenda/opening-hours/Create.svelte';
 //import ConfigurationForm from '$lib/components/agenda/configuration/form.svelte';
 
 export const components = [
@@ -14,7 +14,7 @@ export const components = [
     },
     {
         name: 'CreateOpeningHours',
-        //component: CreateOpeningHours
+        component: CreateOpeningHours
     },
     {
         name: 'ConfigurationForm',

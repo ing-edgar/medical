@@ -1,6 +1,5 @@
 import API from "../services/Api";
 import { writable } from 'svelte/store';
-import { faRoute } from "@fortawesome/free-solid-svg-icons";
 
 export const storeOpeningHours = writable({
     selected_weekdays: [], //union ids
@@ -21,10 +20,10 @@ export const list = async (id) => {
 }
 
 // Método que permite guardar un horario de atención
-/*export const save = async (values) => {
+export const save = async (values) => {
     try {
 
-        const response = API.post('opening-hours', {
+        const response = API.post(route('opening-hours.save'), {
             user_id: values.user_id,
             openingHours: values.openingHoursAttr,
             deleted_weekdays: values.deleted_weekdays,
@@ -39,7 +38,7 @@ export const list = async (id) => {
 export const update = async (values) => {
 
 }
-*/
+
 export const findIndex = (hours, openingHourTemp, openingHourTempIndex) => {
     let count = 0;
     for (let i = 0; i < hours.length; i++) {

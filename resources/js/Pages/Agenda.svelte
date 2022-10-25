@@ -7,6 +7,8 @@
     let component = null;
     function openLayout(event) {
         open = event.detail.open;
+        console.log(event.detail.open);
+        if (!(event.detail.componentName)) return;
         component = components.find(
             (component) => component.name === event.detail.componentName
         ).component;
@@ -24,5 +26,5 @@
 </Main>
 
 {#if open}
-    <svelte:component this={component} bind:open />
+    <svelte:component this={component} {open} on:click={openLayout} />
 {/if}

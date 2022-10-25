@@ -1,0 +1,197 @@
+<script>
+    import Fa from "svelte-fa/src/fa.svelte";
+    import { createEventDispatcher, onDestroy, onMount } from "svelte";
+    import Intervals from "./Intervals.svelte";
+    import { storeOpeningHours, save } from "../../../../api/opening_hours.js";
+    import { getWeekdays } from "../../../../api/weekday.js";
+    import moment from "moment/moment";
+    import Messages from "../../layout/Messages.svelte";
+    import ToolbarModal from "../../layout/ToolbarModal.svelte";
+    import {
+        faFloppyDisk,
+        faPlus,
+        faAngleLeft,
+    } from "@fortawesome/free-solid-svg-icons";
+
+    const dispatch = createEventDispatcher();
+
+    let openingHours = {
+        weekdays: [],
+        selected_weekdays: [],
+        deleted_weekdays: [],
+        intervals: [],
+    };
+
+    function click(componentName, open) {
+        dispatch("click", { componentName, open });
+    }
+
+    onMount(() => getWeekday());
+
+    async function getWeekday() {
+        const response = await getWeekdays();
+        const openingHour = $storeOpeningHours.openingHour;
+        // Son todos los días que no tienen un horario de atención
+        openingHours.weekdays = findEmptyOpeningHours(response.data);
+        // Si se ha de editar, debemos concatenar los días vacíos
+        // con los que actualmente tiene el grupo, junto
+        // con sus intervalos
+        if (openingHour) {
+            openingHours.selected_weekdays = getSelectedWeekdays(openingHour);
+            openingHours.weekdays = openingHour.weekdays.concat(
+                openingHours.weekdays
+            );
+            openingHours.intervals = openingHour.value;
+        }
+    }
+
+    function getSelectedWeekdays(openingHour) {
+        return $storeOpeningHours.selected_weekdays.filter((id) =>
+            openingHour.weekdays.some((weekday) => weekday.id === id)
+        );
+    }
+
+    function findEmptyOpeningHours(weekdays) {
+        const storeWeekdays = $storeOpeningHours.selected_weekdays;
+        return weekdays.filter((weekday) => {
+            return !storeWeekdays.includes(weekday.id);
+        });
+    }
+
+    function changed(event, weekday) {
+        // Eliminamos o agregamos los identificadores que debemos actualizar
+        if (event.target.checked) {
+            openingHours.deleted_weekdays.filter(
+                (element) => element !== weekday.id
+            );
+        } else {
+            openingHours.deleted_weekdays.push(weekday.id);
+        }
+    }
+
+    function removeEntry(index) {
+        openingHours.intervals = openingHours.intervals.filter(
+            (e, i) => i !== index
+        );
+    }
+
+    function saveOpeningHours() {
+        const response = save({
+            user_id: 1,
+            openingHoursAttr: buildOpeningHours(),
+            deleted_weekdays: openingHours.deleted_weekdays,
+        })
+            .then((response) => {
+                if (openingHours.selected_weekdays <= 0) {
+                    openingHours.intervals = [];
+                }
+            })
+            .catch((error) => {});
+    }
+
+    function buildOpeningHours() {
+        return openingHours.selected_weekdays.map((weekday_id) => {
+            return {
+                weekday_id,
+                value: sort(),
+            };
+        });
+    }
+
+    function sort() {
+        return openingHours.intervals.sort(function (a, b) {
+            const aStartTime = moment(a.start_time, "h:mm:ss A");
+            const aEndTime = moment(a.end_time, "h:mm:ss A");
+            const bStartTime = moment(b.start_time, "h:mm:ss A");
+            const bEndTime = moment(b.end_time, "h:mm:ss A");
+
+            if (aStartTime < bStartTime && aEndTime < bEndTime) {
+                return -1;
+            }
+            // Ordenamos el segundo como el primero
+            if (aStartTime > bStartTime && aEndTime > bEndTime) {
+                return 1;
+            }
+
+            return 0;
+        });
+    }
+
+    function addNewEntry() {
+        if (openingHours.selected_weekdays <= 0) {
+            alert("Deberá escoger un día laboral");
+            return;
+        }
+
+        openingHours.intervals.push({
+            start_time: "8:00 AM",
+            end_time: "12:00 PM",
+        });
+        openingHours.intervals = openingHours.intervals;
+    }
+</script>
+
+<div class="text-gray-600">
+    <ToolbarModal>
+        <button
+            slot="left-actions"
+            class="text-blue-600 flex items-center"
+            on:click={() => click("ShowOpeningHours", true)}
+        >
+            <Fa icon={faAngleLeft} /> <span>Atrás</span>
+        </button>
+        <h1 slot="modal-title">Horario de atención</h1>
+        <div slot="right-actions">
+            <button
+                class="text-blue-600"
+                on:click={saveOpeningHours}
+                disabled={openingHours.intervals <= 0}
+            >
+                <Fa icon={faFloppyDisk} />
+            </button>
+            <button
+                class="text-blue-600"
+                on:click={addNewEntry}
+                disabled={openingHours.selected_weekdays <= 0}
+            >
+                <Fa icon={faPlus} />
+            </button>
+        </div>
+    </ToolbarModal>
+
+    <div class="py-2">
+        <Messages />
+    </div>
+    {#if openingHours.weekdays.length > 0}
+        <div id="workdays" class="flex space-x-2 ">
+            {#each openingHours.weekdays as weekday}
+                <div>
+                    <label for="workdays_id" class="block"
+                        >{weekday.name}
+                    </label>
+                    <input
+                        type="checkbox"
+                        name="workdays_id"
+                        id="workdays_id"
+                        bind:group={openingHours.selected_weekdays}
+                        on:change={(event) => changed(event, weekday)}
+                        value={weekday.id}
+                    />
+                </div>
+            {/each}
+        </div>
+        <div id="intervals">
+            {#each openingHours.intervals as interval, index}
+                <Intervals {interval} on:delete={() => removeEntry(index)} />
+            {/each}
+        </div>
+    {:else}
+        <p>No hay días libres para asignar un horario de atención</p>
+    {/if}
+</div>
+
+<style>
+    button:disabled {
+        @apply text-gray-300;
+    }
+</style>

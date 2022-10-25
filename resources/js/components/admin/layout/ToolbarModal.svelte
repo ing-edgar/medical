@@ -5,6 +5,6 @@
         <slot name="modal-title" />
     </h1>
     <div class="space-x-4">
-        <slot name="rigth-actions" />
+        <slot name="right-actions" />
     </div>
 </div>
