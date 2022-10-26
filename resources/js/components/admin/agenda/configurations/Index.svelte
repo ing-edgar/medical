@@ -40,13 +40,14 @@
     function buildConfigurations(types, configurations) {
         return types.map((type) => {
             let value = "-1";
-            console.log(type.id);
+            console.log(configurations);
             if (configurations.length > 0) {
                 value = configurations.find(
                     (element) => element.pivot.config_type_id === type.id
                 );
-
-                value = parseInt(value.pivot.value);
+                if (value) {
+                    value = parseInt(value.pivot.value);
+                }
             }
 
             return {

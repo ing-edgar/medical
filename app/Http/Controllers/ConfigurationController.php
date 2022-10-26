@@ -22,10 +22,10 @@ class ConfigurationController extends Controller
         // Buscamos los tipos de configuración
         $configurationType = ConfigType::select('id', 'label', 'input_type')->get();
 
-        return response()->json(data: [
+        return response()->json([
             'config_user' => $user,
             'configuration_types' => $configurationType
-        ]);
+        ], 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
