@@ -39,7 +39,7 @@
     function buildOfficeHour(data) {
         data.forEach((day) => {
             // Se obtiene la jornada horaria por día
-            const hours = JSON.parse(day.pivot.value ?? []);
+            const hours = JSON.parse(day.pivot.values ?? []);
 
             const openingHour = findOpeningHour(hours);
 
@@ -48,7 +48,7 @@
             if (!openingHour) {
                 openingHours.push({
                     weekdays: [{ id: day.id, name: day.name }],
-                    value: hours,
+                    values: hours,
                 });
             } else {
                 openingHour.weekdays.push({
@@ -58,7 +58,7 @@
             }
         });
         openingHours.sort(function (a, b) {
-            return b.value.length - a.value.length;
+            return b.values.length - a.values.length;
         });
         openingHours = openingHours;
     }
@@ -74,7 +74,7 @@
         for (let index = 0; index < openingHoursTemp.length; index++) {
             const openingHourTemp = openingHoursTemp[index];
 
-            if (hours.length !== openingHourTemp?.value.length) {
+            if (hours.length !== openingHourTemp?.values.length) {
                 continue;
             }
 
@@ -116,7 +116,7 @@
 </ToolbarModal>
 <div>
     {#each openingHours as openingHour}
-        {#if openingHour.value.length > 0}
+        {#if openingHour.values.length > 0}
             <div class="text-xs md:text-base my-2 p-2">
                 <div class="flex flex-wrap">
                     <p class="font-semibold">
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                {#each openingHour.value as value}
+                {#each openingHour.values as value}
                     <div class="text-left">
                         {value.start_time} - {value.end_time}
                     </div>

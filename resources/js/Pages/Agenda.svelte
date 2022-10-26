@@ -5,10 +5,10 @@
     import { components } from "../services/components";
     let open = false;
     let component = null;
-    
+
     function openLayout(event) {
         open = event.detail.open;
-        if (!(event.detail.componentName)) return;
+        if (!event.detail.componentName) return;
         component = components.find(
             (component) => component.name === event.detail.componentName
         ).component;
@@ -26,5 +26,5 @@
 </Main>
 
 {#if open}
-    <svelte:component this={component} {open} on:click={openLayout} />
+    <svelte:component this={component} on:click={openLayout} />
 {/if}

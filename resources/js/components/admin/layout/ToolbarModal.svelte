@@ -1,4 +1,4 @@
-<div class="flex justify-between items-center text-lg">
+<div class="flex justify-between items-center text-lg px-2">
     <slot name="left-actions" />
 
     <h1 class="text-xl font-semibold text-center">

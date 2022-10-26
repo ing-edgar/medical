@@ -9,7 +9,7 @@ trait HasOpeningHour
 {
     public function weekdays(): BelongsToMany
     {
-        return $this->belongsToMany(Weekday::class, 'opening_hours')->withPivot('value');
+        return $this->belongsToMany(Weekday::class, 'opening_hours')->withPivot('values');
     }
 
     public function openingHours()
@@ -23,7 +23,7 @@ trait HasOpeningHour
         // Eliminamos todos los elementos que se encuentren dentro de nuestro arreglo
         $this->weekdays()->detach($deleted_ids);
         foreach ($openingHours as $openingHour) {
-            $workingTimes[$openingHour['weekday_id']]['value'] = json_encode($openingHour['value']);
+            $workingTimes[$openingHour['weekday_id']]['values'] = json_encode($openingHour['values']);
         }
         $this->weekdays()->sync($workingTimes, false);
     }

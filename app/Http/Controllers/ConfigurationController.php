@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConfigType;
+use App\Models\User;
+use Illuminate\Http\Client\ResponseSequence;
 use Illuminate\Http\Request;
 
 class ConfigurationController extends Controller
@@ -11,9 +14,18 @@ class ConfigurationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = User::select('id', 'name')->with(['configurations' => function ($query) {
+            $query->select('configurations.id');
+        }])->findOrFail($request->get('user_id'));
+        // Buscamos los tipos de configuración
+        $configurationType = ConfigType::select('id', 'label', 'input_type')->get();
+
+        return response()->json(data: [
+            'config_user' => $user,
+            'configuration_types' => $configurationType
+        ]);
     }
 
     /**
@@ -24,7 +36,10 @@ class ConfigurationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        $user->addConfiguration($request->configurations);
+
+        return response()->json('La configuración se ha guardado exitósamente', 201);
     }
 
     /**

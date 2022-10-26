@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="hover:bg-pink-100 p-2 rounded-full">
-                    <a href={"#"} on:click={() => click("ConfigurationForm", true)}>
+                    <a href={"#"} on:click={() => click("ConfigurationIndex", true)}>
                         Configuración
                     </a>
                 </li>

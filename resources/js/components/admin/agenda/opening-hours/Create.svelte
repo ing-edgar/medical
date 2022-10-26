@@ -43,7 +43,7 @@
             openingHours.weekdays = openingHour.weekdays.concat(
                 openingHours.weekdays
             );
-            openingHours.intervals = openingHour.value;
+            openingHours.intervals = openingHour.values;
         }
     }
 
@@ -101,7 +101,7 @@
         return openingHours.selected_weekdays.map((weekday_id) => {
             return {
                 weekday_id,
-                value: sort(),
+                values: sort(),
             };
         });
     }
