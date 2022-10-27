@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Models;
+
+use App\Traits\Agenda\WithUuid;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+
+class Appointment extends Pivot
+{
+    use WithUuid;
+    protected $table = 'appointments';
+
+    /**
+     * Get the user that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the user that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * Get the user that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function appointment_status(): BelongsTo
+    {
+        return $this->belongsTo(AppointmentStatus::class);
+    }
+
+    /**
+     * Get the payment_status that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function payment_status(): BelongsTo
+    {
+        return $this->belongsTo(PaymentStatus::class);
+    }
+}

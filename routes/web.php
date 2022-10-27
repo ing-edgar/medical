@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function () {
         'appointments'   => AppointmentController::class,
         'articles'       => ArticleController::class,
         'events'         => EventController::class,
-        'weekdays'         => WeekdayController::class,
+        'weekdays'       => WeekdayController::class,
     ]);
-    UserRoute::routes();
+    //UserRoute::routes();
 });

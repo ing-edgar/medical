@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AppointmentController extends Controller
 {
@@ -13,7 +16,16 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        $appointments = Appointment::with(['patient' => function ($query) {
+            $query->select('id', 'name');
+        }, 'user' => function ($query) {
+            $query->select('id', 'name');
+        }, 'appointment_status' => function ($query) {
+            $query->select('id', 'name');
+        }, 'payment_status' => function ($query) {
+            $query->select('id', 'name');
+        }])->get();
+        return Inertia(component: 'Appointment', props: compact('appointments'));
     }
 
     /**
