@@ -33,10 +33,10 @@
                 5
             </div>
         </a>
-        <ItemMenu icon={faCalendarCheck} name="Agenda" />
-        <ItemMenu icon={faCalendarDays} name="Citas" />
-        <ItemMenu icon={faUsers}  name="Usuarios" />
-        <ItemMenu icon={faNewspaper}  name="Artículos" />
+        <ItemMenu icon={faCalendarCheck} name="Agenda" ref="agenda.index" />
+        <ItemMenu icon={faCalendarDays} name="Citas" ref="appointments.index" />
+        <ItemMenu icon={faUsers} name="Usuarios" />
+        <ItemMenu icon={faNewspaper} name="Artículos" />
     </div>
     <div class="flex flex-col space-y-4 pb-5">
         <ItemMenu icon={faUser} name="Perfil" />

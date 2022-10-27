@@ -2,7 +2,8 @@
     import Fa from "svelte-fa/src/fa.svelte";
     import { onMount } from "svelte";
     import { createPopper } from "@popperjs/core";
-    export let icon, name;
+    import { faRoute } from "@fortawesome/free-solid-svg-icons";
+    export let icon, name, ref;
 
     let reference, tooltip, arrow;
     let show = false;
@@ -39,7 +40,7 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <a
-    href={"#"}
+    href={ref ? route(ref) : "#"}
     class="relative h-8 w-8 flex justify-center items-center"
     on:mouseover={onFocus}
     on:mouseout={onBlur}
@@ -53,7 +54,7 @@
     bind:this={tooltip}
 >
     {name}
-    <div id="arrow" data-popper-arrow bind:this={arrow}/>
+    <div id="arrow" data-popper-arrow bind:this={arrow} />
 </span>
 
 <style>
