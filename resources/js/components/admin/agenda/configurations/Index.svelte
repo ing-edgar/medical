@@ -1,12 +1,12 @@
 <script>
-    import Fa from "svelte-fa/src/fa.svelte";
-    import Modal from "../../layout/Modal.svelte";
-    import ToolbarModal from "../../layout/ToolbarModal.svelte";
     import { faXmark, faSave } from "@fortawesome/free-solid-svg-icons";
-    import { createEventDispatcher, onMount } from "svelte";
+    import ToolbarModal from "../../layout/ToolbarModal.svelte";
     import { list, save } from "../../../../api/configuration";
-    import Select from "../../layout/Select.svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import Messages from "../../layout/Messages.svelte";
+    import Select from "../../layout/Select.svelte";
+    import Modal from "../../layout/Modal.svelte";
+    import Fa from "svelte-fa/src/fa.svelte";
 
     const dispatch = createEventDispatcher();
 

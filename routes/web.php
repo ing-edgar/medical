@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AvailableTimeController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OpeningHourController;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->group(function () {
+    Route::get('available-times', AvailableTimeController::class);
+
     Route::get('/', function () {
         return inertia('Welcome', props: ['title' => 'edgar']);
     });

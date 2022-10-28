@@ -139,7 +139,7 @@
     }
 </script>
 
-<div class="text-gray-600">
+<div>
     <ToolbarModal>
         <button
             slot="left-actions"
