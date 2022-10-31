@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import moment from "moment/moment";
     import "moment/locale/es";
-    import { buildDays } from "../../../services/calendar";
+    import { buildDays } from "../../../../services/calendar";
     import Fa from "svelte-fa/src/fa.svelte";
     import {
         faAngleLeft,
@@ -57,7 +57,7 @@
     });
 </script>
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center border-t border-l  border-r border-gray-400 p-2">
     <button class="text-sky-600 px-2" on:click={prevMonth}>
         <Fa icon={faAngleLeft} />
     </button>

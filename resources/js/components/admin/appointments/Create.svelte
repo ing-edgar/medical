@@ -1,16 +1,41 @@
 <script>
-    import {
-        faXmark,
-        faSave,
-        faSearch,
-        faCalendarAlt,
-    } from "@fortawesome/free-solid-svg-icons";
+    import { faXmark, faSave } from "@fortawesome/free-solid-svg-icons";
     import Fa from "svelte-fa/src/fa.svelte";
     import ToolbarModal from "../layout/ToolbarModal.svelte";
     import { view } from "../../../services/view";
-    import Button from "../layout/Button.svelte";
+    import DateTime from "./DateTime.svelte";
+    import Inputs from "./Inputs.svelte";
+    import { getProfessionals } from "../../../api/user";
+    import { save } from "../../../api/appointment";
+    import { inputs } from "../../../services/form";
+    import { onMount } from "svelte";
+    import Messages from "../layout/Messages.svelte";
 
-    function save() {}
+    function store() {
+        const response = save($inputs);
+        response
+            .then((response) => {
+                window.location.href = response.data.url;
+            })
+            .catch((error) => {
+                console.log(error);
+                request.status = error.status;
+                request.message = "Por favor, corrige los siguientes errores";
+                request.data = Object.entries(error.data.errors);
+            });
+    }
+    let professionals = [];
+    let request = {
+        status: 0,
+        message: null,
+        data: [],
+    };
+    onMount(() => getProfessionalsUser());
+
+    async function getProfessionalsUser() {
+        const response = await getProfessionals();
+        if (response.status === 200) professionals = response.data;
+    }
 </script>
 
 <ToolbarModal>
@@ -23,7 +48,7 @@
     </button>
     <h1 slot="modal-title">Crear nueva cita</h1>
     <div slot="right-actions">
-        <button class="text-blue-600" on:click={save}>
+        <button class="text-blue-600" on:click={store}>
             <Fa icon={faSave} />
         </button>
     </div>
@@ -33,63 +58,7 @@
     class="text-start text-gray-600 pt-4 
     space-y-3 px-2 max-h-96 overflow-y-auto"
 >
-    <div>
-        <label for="name" class="block">¿Para quién es la cita?</label>
-        <input
-            type="text"
-            placeholder="Nombre del paciente"
-            class="pl-2 pr-5 w-full border border-gray-400 rounded-md py-2"
-        />
-    </div>
-    <div>
-        <label for="name" class="block">RFC</label>
-        <input
-            type="text"
-            placeholder="Identificación del paciente"
-            class="pl-2 pr-5 w-full border border-gray-400 rounded-md py-2"
-        />
-    </div>
-    <div>
-        <label for="name" class="block">Teléfono</label>
-        <input
-            type="text"
-            placeholder="Teléfono del paciente"
-            class="pl-2 pr-5 w-full border border-gray-400 rounded-md py-2"
-        />
-    </div>
-    <div>
-        <label for="name" class="block">Correo electrónico</label>
-        <input
-            type="text"
-            placeholder="Correo electrónico del paciente"
-            class="pl-2 pr-5 w-full border border-gray-400 rounded-md py-2"
-        />
-    </div>
-    <div>
-        <label for="professional" class="block">
-            Seleccione el profesional que quieres que te atienda
-        </label>
-        <select
-            name="professional"
-            id="professional"
-            class="border border-gray-500 rounded-md w-full p-2"
-        />
-    </div>
-    <div>
-        <label for="" class="block">¿Cuándo quiere la cita?</label>
-        <div class="flex">
-            <Button
-                class="bg-sky-600 text-white"
-                on:click={() => ($view.component = "AvailableTime")}
-            >
-                <Fa icon={faCalendarAlt} /> <span>Seleccione fecha y hora</span>
-            </Button>
-            <div
-                class="border border-gray-400 rounded-md ml-2 w-1/2 
-                text-gray-400 align-middle p-2 bg-gray-200"
-            >
-                <span>aaaa-mm-dd</span>
-            </div>
-        </div>
-    </div>
+    <Messages {request} />
+    <Inputs {professionals} />
+    <DateTime />
 </section>

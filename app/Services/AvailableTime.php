@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repositories\AvailableTimeRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,25 +13,28 @@ class AvailableTime
   private Carbon $carbon;
   private $today;
 
-  public function build(Request $request): Collection
+  public function build(Request $request): array
   {
     $this->carbon = Carbon::createFromFormat('Y-m-d', $request->get('date'));
     $this->today = $this->carbon->copy()->now();
 
     $workdayRepository = new AvailableTimeRepository();
-    $users = $workdayRepository->getOfficeHoursByUser($request->get('date'));
+    $users = $workdayRepository
+      ->getOfficeHoursByUser(
+        $request->get('user_id'),
+        $request->get('date')
+      );
     return $this->create($users);
   }
 
-  private function create(Collection $users): Collection
+  private function create(array $user): array
   {
-    return $users->map(function ($user) {
-      return [
-        'username' => $user['username'],
-        'user_id' => $user['user_id'],
-        'availables' => $this->buildAvailables($user)
-      ];
-    });
+
+    return [
+      'username' => $user['username'],
+      'user_id' => $user['user_id'],
+      'availables' => $this->buildAvailables($user)
+    ];
   }
 
   private function buildAvailables($user): array
@@ -38,7 +42,7 @@ class AvailableTime
     $available = [];
     $intervals = $this->buildIntervals($user['intervals'], $user['appointments_duration']);
     foreach ($intervals as $interval) {
-      $appointment_count = $user['appointments']->where('pivot.start_time', $interval['start_time'])->where('pivot.end_time', $interval['end_time'])->count();
+      $appointment_count = $user['appointments']?->where('pivot.start_time', $interval['start_time'])->where('pivot.end_time', $interval['end_time'])->count();
       if ($appointment_count <= 0) {
         $available[] = [
           'interval' => $interval['start_time'] . '-' . $interval['end_time'],

@@ -27,47 +27,47 @@ class AvailableTimeRepository
     return $this->buildOfficeHours($user);
   }
 
-  public function getOfficeHoursByUser($date): Collection
+  public function getOfficeHoursByUser($user_id, $date): array
   {
-    $users = $this->getOfficeHours($date)->with(['configurations' => function ($query) {
+    $user = $this->getOfficeHours($date)->with(['configurations' => function ($query) {
       $query->where('name', 'appointment_duration');
-    }, 'patients' => function ($query) use ($date) {
+    }, 'appointments' => function ($query) use ($date) {
       $query->where('date', $date);
-    }])->get();
-    $users = $users->map(function ($user) {
-      $details = $this->buildOfficeHours($user);
-      if (count($details) > 0) {
-        return [
-          'username' => $user->name,
-          'user_id' => $user->id,
-          'appointments' => $user->patients,
-          'appointments_duration' => $user->configurations->first()->pivot->value,
-          'intervals' => $details
-        ];
-      }
-    });
-    return $users->filter();
+    }])->where('id', $user_id)->first();
+
+    $details = $this->buildOfficeHours($user);
+    if (count($details) > 0) {
+      return [
+        'username' => $user->name,
+        'user_id' => $user->id,
+        'appointments' => $user->patients,
+        'appointments_duration' => $user->configurations->first()->pivot->value,
+        'intervals' => $details
+      ];
+    }
+
+    return [];
   }
 
   private function getOfficeHours($date): Builder
   {
     $day = Carbon::createFromFormat('Y-m-d', $date)->isoWeekday();
-    return User::with(['officeHours' => function ($query) use ($day) {
-      $query->where('workday_id', $day);
-    }, 'officeHourEvents' => function ($query) use ($date) {
+    return User::with(['weekdays' => function ($query) use ($day) {
+      $query->where('weekday_id', $day);
+    }, 'events' => function ($query) use ($date) {
       $query->where('date', $date);
     }]);
   }
 
   private function buildOfficeHours($user)
   {
-    $officeHourEvent = $user->officeHourEvents->first();
-    $details = json_decode($officeHourEvent ? $officeHourEvent->details : '[]');
+    $officeHourEvent = $user->events->first();
+    $values = json_decode($officeHourEvent ? $officeHourEvent->values : '[]');
 
     if (!$officeHourEvent) {
-      $officeHour = $user->officeHours->first();
-      $details = json_decode($officeHour ? $officeHour->pivot->details : '[]');
+      $officeHour = $user->weekdays->first();
+      $values = json_decode($officeHour ? $officeHour->pivot->values : '[]');
     }
-    return $details;
+    return $values;
   }
 }

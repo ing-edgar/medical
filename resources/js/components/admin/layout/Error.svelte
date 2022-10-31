@@ -4,6 +4,6 @@
 
 <ul>
     {#each errors as error}
-        <li class="p-2">{error[1]}</li>
+        <li class="px-2">{error[1]}</li>
     {/each}
 </ul>

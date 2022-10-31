@@ -15,6 +15,6 @@ class AvailableTimeController extends Controller
     public function __invoke(Request $request)
     {
         $availableTime = new AvailableTime();
-        dd($availableTime->build($request));
+        return response()->json($availableTime->build($request), 200, [], JSON_NUMERIC_CHECK);
     }
 }

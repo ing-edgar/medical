@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { components } from "../services/components";
-
+import { inputs } from './form';
 export const view = writable({
     component: null, // Nombre del componente
     data: null // Los datos alojados en el modal
@@ -15,6 +15,7 @@ export const component = derived(view, $view => {
         ).component;
     } else {
         $view.data = null;
+        inputs.set({});
     }
     return component;
 });

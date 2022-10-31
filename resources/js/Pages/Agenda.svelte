@@ -1,6 +1,6 @@
 <script>
-    import Calendar from "../components/admin/agenda/calendar.svelte";
     import ConfigMenu from "../components/admin/agenda/config-menu.svelte";
+    import Base from "../components/admin/layout/Calendar/Base.svelte";
     import Main from "../components/admin/layout/Main.svelte";
     import { components } from "../services/components";
     let open = false;
@@ -22,7 +22,7 @@
 <Main>
     <div slot="title">Agenda</div>
     <ConfigMenu on:click={openLayout} />
-    <Calendar />
+    <Base class="p-4" />
 </Main>
 
 {#if open}

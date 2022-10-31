@@ -19,4 +19,11 @@ trait HasAppointment
             ->withPivot(['date', 'start_time', 'end_time', 'id'])
             ->using(Appointment::class);
     }
+
+    public function addAppointment($patient_id, $attributes)
+    {
+        $this->appointments()->attach($patient_id, $attributes, false);
+
+        return $this->appointments()->where(['patients.id' => $patient_id, 'date' => $attributes['date']])->first();
+    }
 }
