@@ -1,6 +1,5 @@
 <script>
     import ToolbarModal from "../../layout/ToolbarModal.svelte";
-    import { createEventDispatcher, onMount } from "svelte";
     import Fa from "svelte-fa/src/fa.svelte";
     import {
         faXmark,
@@ -13,12 +12,12 @@
         list,
         findIndex,
     } from "../../../../api/opening_hours";
+    import { view } from "../../../../services/view";
+    import { onMount } from "svelte";
 
     // Es un arreglo que contiene objetos de los horarios de atención de
     // los días de la semana.
     let openingHours = [];
-
-    const dispatch = createEventDispatcher();
 
     onMount(() => getOpeningHours());
 
@@ -32,7 +31,6 @@
         if (response.status > 300) {
         }
 
-        console.log(response);
         buildOfficeHour(response.data);
     }
 
@@ -89,11 +87,7 @@
 
     function saveInStoreOpeningHoursObject(openingHour) {
         $storeOpeningHours.openingHour = openingHour;
-        click("CreateOpeningHours", true);
-    }
-
-    function click(componentName, open) {
-        dispatch("click", { componentName, open });
+        $view.component = "CreateOpeningHours";
     }
 </script>
 
@@ -101,7 +95,7 @@
     <button
         class="text-sky-600"
         slot="left-actions"
-        on:click={() => click(null, false)}
+        on:click={() => ($view.component = null)}
     >
         <Fa icon={faXmark} />
     </button>
@@ -109,7 +103,7 @@
     <button
         slot="right-actions"
         class="text-sky-600"
-        on:click={() => click("CreateOpeningHours", true)}
+        on:click={() => ($view.component = "CreateOpeningHours")}
     >
         <Fa icon={faPlus} />
     </button>

@@ -1,9 +1,6 @@
 <script>
-    import { createEventDispatcher } from "svelte";
-    import Fa from "svelte-fa/src/fa.svelte";
-    import { faEye } from "@fortawesome/free-solid-svg-icons";
     import AppointmentsCount from "./AppointmentsCount.svelte";
-    const dispatch = createEventDispatcher();
+    import { view } from "../../../../services/view";
 
     export let days = [];
     export let appointmentsCount;
@@ -11,12 +8,12 @@
     export { className as class };
 
     function selected_day(day) {
-        dispatch("click", day);
+        $view.component = "OpeningHourModal";
+        $view.data = day;
     }
 
     function getAppointmentsCount(date) {
         // Filter appointmenstCount
-        console.log(appointmentsCount);
         return appointmentsCount.find(
             (appointment) => appointment.date === date
         )?.count;

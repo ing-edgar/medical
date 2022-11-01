@@ -1,19 +1,18 @@
 <script>
     import Fa from "svelte-fa/src/fa.svelte";
-    import { createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { onMount } from "svelte";
     import Intervals from "./Intervals.svelte";
     import { storeOpeningHours, save } from "../../../../api/opening_hours.js";
     import { getWeekdays } from "../../../../api/weekday.js";
     import moment from "moment/moment";
     import Messages from "../../layout/Messages.svelte";
     import ToolbarModal from "../../layout/ToolbarModal.svelte";
+    import { view } from "../../../../services/view";
     import {
         faFloppyDisk,
         faPlus,
         faAngleLeft,
     } from "@fortawesome/free-solid-svg-icons";
-
-    const dispatch = createEventDispatcher();
 
     let openingHours = {
         weekdays: [],
@@ -23,10 +22,6 @@
     };
 
     let request = {};
-
-    function click(componentName, open) {
-        dispatch("click", { componentName, open });
-    }
 
     onMount(() => getWeekday());
 
@@ -38,7 +33,8 @@
         // Si se ha de editar, debemos concatenar los días vacíos
         // con los que actualmente tiene el grupo, junto
         // con sus intervalos
-        if (openingHour) {
+
+        if (openingHour.weekdays) {
             openingHours.selected_weekdays = getSelectedWeekdays(openingHour);
             openingHours.weekdays = openingHour.weekdays.concat(
                 openingHours.weekdays
@@ -48,6 +44,7 @@
     }
 
     function getSelectedWeekdays(openingHour) {
+        console.log($storeOpeningHours);
         return $storeOpeningHours.selected_weekdays.filter((id) =>
             openingHour.weekdays.some((weekday) => weekday.id === id)
         );
@@ -144,7 +141,7 @@
         <button
             slot="left-actions"
             class="text-blue-600 flex items-center"
-            on:click={() => click("ShowOpeningHours", true)}
+            on:click={() => ($view.component = "ShowOpeningHours")}
         >
             <Fa icon={faAngleLeft} /> <span>Atrás</span>
         </button>

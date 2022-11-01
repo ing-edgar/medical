@@ -109,6 +109,13 @@ class AppointmentController extends Controller
         return response()->json($appointmentsRepository->getCount($request->user_id));
     }
 
+    public function getList(Request $request)
+    {
+        $appointmentsRepository = new AppointmentsRepository();
+        $appointments = $appointmentsRepository->getList($request->user_id, $request->query('date'));
+        return response()->json($appointments);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

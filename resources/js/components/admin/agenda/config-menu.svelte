@@ -1,13 +1,7 @@
 <script>
     import Fa from "svelte-fa/src/fa.svelte";
     import { faGear } from "@fortawesome/free-solid-svg-icons";
-    import { createEventDispatcher } from "svelte";
-
-    const dispatch = createEventDispatcher();
-
-    function click(componentName, open) {
-        dispatch("click", { componentName, open });
-    }
+    import { view } from "../../../services/view";
     let open = false;
 </script>
 
@@ -25,12 +19,19 @@
         >
             <ul class="text-right">
                 <li class="hover:bg-pink-100 p-2 rounded-full">
-                    <a href={"#"} on:click={() => click("OpeningHoursIndex", true)}>
+                    <a
+                        href={"#"}
+                        on:click={() => ($view.component = "ShowOpeningHours")}
+                    >
                         Horario de atención
                     </a>
                 </li>
                 <li class="hover:bg-pink-100 p-2 rounded-full">
-                    <a href={"#"} on:click={() => click("ConfigurationIndex", true)}>
+                    <a
+                        href={"#"}
+                        on:click={() =>
+                            ($view.component = "ConfigurationIndex")}
+                    >
                         Configuración
                     </a>
                 </li>

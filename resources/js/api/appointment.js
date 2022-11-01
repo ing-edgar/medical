@@ -45,3 +45,15 @@ export const getAppointmentsCount = async (user_id) => {
         return error;
     }
 }
+
+export const getAppointments = async (date, user_id) => {
+    try {
+        const response = API.get(route('appointments.list', {
+            user_id: user_id,
+            date: date
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
