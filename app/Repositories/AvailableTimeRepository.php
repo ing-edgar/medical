@@ -34,13 +34,12 @@ class AvailableTimeRepository
     }, 'appointments' => function ($query) use ($date) {
       $query->where('date', $date);
     }])->where('id', $user_id)->first();
-
     $details = $this->buildOfficeHours($user);
     if (count($details) > 0) {
       return [
         'username' => $user->name,
         'user_id' => $user->id,
-        'appointments' => $user->patients,
+        'appointments' => $user->appointments,
         'appointments_duration' => $user->configurations->first()->pivot->value,
         'intervals' => $details
       ];
