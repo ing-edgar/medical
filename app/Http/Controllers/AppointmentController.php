@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\User;
+use App\Repositories\AppointmentsRepository;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -100,6 +101,12 @@ class AppointmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function getAppointmentsCount(Request $request)
+    {
+        $appointmentsRepository = new AppointmentsRepository();
+        return response()->json($appointmentsRepository->getCount($request->user_id));
     }
 
     /**

@@ -33,3 +33,15 @@ export const save = (values) => {
         return error;
     }
 }
+
+export const getAppointmentsCount = async (user_id) => {
+    try {
+
+        const response = API.get(route('appointments.count', {
+            user_id: user_id
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}

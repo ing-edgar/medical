@@ -27,7 +27,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('users/professionals', [UserController::class, 'getProfessionals'])->name('users.professionals');
     Route::get('available-times', AvailableTimeController::class)->name('users.availableTimes');
-
+    Route::get('appointments/count', [AppointmentController::class, 'getAppointmentsCount'])->name('appointments.count');
     Route::get('/', function () {
         return inertia('Welcome', props: ['title' => 'edgar']);
     });

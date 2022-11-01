@@ -4,7 +4,7 @@
     import View from "./View.svelte";
     let days = [];
     let className = "";
-
+    export let appointmentsCount;
     export { className as class };
 
     export let weekdays = [
@@ -29,6 +29,6 @@
                 {weekday}
             </div>
         {/each}
-        <View {days} class={className} on:click/>
+        <View {days} class={className} {appointmentsCount} on:click/>
     </div>
 </div>

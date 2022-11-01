@@ -1,4 +1,4 @@
-<table class="table-fixed w-full">
+<table class="table-auto w-full">
     <thead>
         <slot name="thead" />
     </thead>
