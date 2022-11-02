@@ -1,10 +1,11 @@
 <script>
-    import TableDataCell from "../layout/TableDataCell.svelte";
-    import TableHead from "../layout/TableHead.svelte";
-    import Table from "../layout/Table.svelte";
-    import Fa from "svelte-fa/src/fa.svelte";
+    import TableDataCell from "../html/table/TableDataCell.svelte";
     import { faWrench } from "@fortawesome/free-solid-svg-icons";
-    import Button from "../layout/Button.svelte";
+    import Button from "../html/interactions/Button.svelte";
+    import TableHead from "../html/table/TableHead.svelte";
+    import Table from "../html/table/Table.svelte";
+    import Fa from "svelte-fa/src/fa.svelte";
+
     export let appointments;
 </script>
 
@@ -37,7 +38,7 @@
                 <TableDataCell>{appointment.user.name}</TableDataCell>
                 <TableDataCell>
                     <Button class="bg-green-600 text-white">
-                        <Fa icon={faWrench} /> Administrar
+                        <Fa icon={faWrench} /> <span>Administrar</span>
                     </Button>
                 </TableDataCell>
             </tr>

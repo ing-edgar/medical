@@ -22,13 +22,14 @@
 <div class="bg-white">
     <Counter bind:days />
     <div
-        class="grid grid-cols-7  text-center border border-gray-400 gap-px bg-gray-400"
+        class="grid grid-cols-7  text-center border border-gray-400 gap-px 
+        bg-gray-400"
     >
         {#each weekdays as weekday}
             <div class="p-2 bg-white text-gray-600 font-semibold">
                 {weekday}
             </div>
         {/each}
-        <View {days} class={className} {appointmentsCount} on:click/>
+        <View {days} class={className} {appointmentsCount} on:click />
     </div>
 </div>

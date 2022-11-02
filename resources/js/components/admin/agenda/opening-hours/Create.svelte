@@ -1,18 +1,18 @@
 <script>
-    import Fa from "svelte-fa/src/fa.svelte";
     import { onMount } from "svelte";
     import Intervals from "./Intervals.svelte";
     import { storeOpeningHours, save } from "../../../../api/opening_hours.js";
     import { getWeekdays } from "../../../../api/weekday.js";
     import moment from "moment/moment";
     import Messages from "../../layout/Messages.svelte";
-    import ToolbarModal from "../../layout/ToolbarModal.svelte";
     import { view } from "../../../../services/view";
     import {
         faFloppyDisk,
         faPlus,
         faAngleLeft,
     } from "@fortawesome/free-solid-svg-icons";
+    import Modal from "../../html/modal/Modal.svelte";
+    import CircleButton from "../../html/interactions/CircleButton.svelte";
 
     let openingHours = {
         weekdays: [],
@@ -136,64 +136,67 @@
     }
 </script>
 
-<div>
-    <ToolbarModal>
-        <button
-            slot="left-actions"
-            class="text-blue-600 flex items-center"
+<Modal>
+    <div slot="left">
+        <CircleButton
+            class="text-blue-400 flex items-center"
+            icon={faAngleLeft}
             on:click={() => ($view.component = "ShowOpeningHours")}
         >
-            <Fa icon={faAngleLeft} /> <span>Atrás</span>
-        </button>
-        <h1 slot="modal-title">Horario de atención</h1>
-        <div slot="right-actions">
-            <button
-                class="text-blue-600"
-                on:click={saveOpeningHours}
-                disabled={openingHours.intervals <= 0}
-            >
-                <Fa icon={faFloppyDisk} />
-            </button>
-            <button
-                class="text-blue-600"
-                on:click={addNewEntry}
-                disabled={openingHours.selected_weekdays <= 0}
-            >
-                <Fa icon={faPlus} />
-            </button>
-        </div>
-    </ToolbarModal>
-
-    <div class="py-2">
-        <Messages {request} />
+            Atrás
+        </CircleButton>
     </div>
-    {#if openingHours.weekdays.length > 0}
-        <div id="workdays" class="flex space-x-2 ">
-            {#each openingHours.weekdays as weekday}
-                <div>
-                    <label for="workdays_id" class="block"
-                        >{weekday.name}
-                    </label>
-                    <input
-                        type="checkbox"
-                        name="workdays_id"
-                        id="workdays_id"
-                        bind:group={openingHours.selected_weekdays}
-                        on:change={(event) => changed(event, weekday)}
-                        value={weekday.id}
+    <h1 slot="title">Horario de atención</h1>
+    <div slot="right">
+        {#if openingHours.intervals.length > 0}
+            <CircleButton
+                icon={faFloppyDisk}
+                class="text-green-400"
+                on:click={saveOpeningHours}
+            />
+        {/if}
+        <CircleButton
+            icon={faPlus}
+            class="text-purple-400"
+            on:click={addNewEntry}
+            disabled={openingHours.selected_weekdays <= 0}
+        />
+    </div>
+    <section slot="body">
+        <div class="py-2">
+            <Messages {request} />
+        </div>
+        {#if openingHours.weekdays.length > 0}
+            <div id="workdays" class="flex space-x-2 ">
+                {#each openingHours.weekdays as weekday}
+                    <div>
+                        <label for="workdays_id" class="block"
+                            >{weekday.name}
+                        </label>
+                        <input
+                            type="checkbox"
+                            name="workdays_id"
+                            id="workdays_id"
+                            bind:group={openingHours.selected_weekdays}
+                            on:change={(event) => changed(event, weekday)}
+                            value={weekday.id}
+                        />
+                    </div>
+                {/each}
+            </div>
+            <div id="intervals">
+                {#each openingHours.intervals as interval, index}
+                    <Intervals
+                        {interval}
+                        on:delete={() => removeEntry(index)}
                     />
-                </div>
-            {/each}
-        </div>
-        <div id="intervals">
-            {#each openingHours.intervals as interval, index}
-                <Intervals {interval} on:delete={() => removeEntry(index)} />
-            {/each}
-        </div>
-    {:else}
-        <p>No hay días libres para asignar un horario de atención</p>
-    {/if}
-</div>
+                {/each}
+            </div>
+        {:else}
+            <p>No hay días libres para asignar un horario de atención</p>
+        {/if}
+    </section>
+</Modal>
 
 <style>
     button:disabled {

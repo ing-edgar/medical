@@ -4,8 +4,8 @@
     import Main from "../components/admin/layout/Main.svelte";
     import { getAppointmentsCount } from "../api/appointment";
     import { onMount } from "svelte";
-    import Modal from "../components/admin/layout/Modal.svelte";
-    import { component } from "../services/view";
+    import Modal from "../components/admin/html/modal/Modal.svelte";
+    import { component, view } from "../services/view";
     let appointmentsCount;
 
     onMount(() => getAppointmentsCountList(1));
@@ -15,6 +15,12 @@
         if (response.status === 200) {
             appointmentsCount = response.data;
         }
+    }
+
+    function selected_day(event) {
+        console.log(event);
+        $view.component = "OpeningHourModal";
+        $view.data = event.detail;
     }
 </script>
 
@@ -26,11 +32,9 @@
     <div slot="title">Agenda</div>
     <ConfigMenu />
     {#if appointmentsCount}
-        <Base class="p-2" {appointmentsCount} />
+        <Base class="p-2" {appointmentsCount} on:click={selected_day} />
     {/if}
 </Main>
 {#if $component}
-    <Modal>
-        <svelte:component this={$component} />
-    </Modal>
+    <svelte:component this={$component} />
 {/if}

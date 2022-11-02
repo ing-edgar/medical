@@ -1,12 +1,13 @@
 <script>
     import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-    import Fa from "svelte-fa/src/fa.svelte";
-    import ToolbarModal from "../layout/ToolbarModal.svelte";
-    import { view } from "../../../services/view";
-    import { onMount } from "svelte";
     import { getAvailableTime } from "../../../api/user";
     import { inputs } from "../../../services/form";
+    import { view } from "../../../services/view";
+    import Fa from "svelte-fa/src/fa.svelte";
+    import { onMount } from "svelte";
     import moment from "moment/moment";
+    import Modal from "../html/modal/Modal.svelte";
+    import CircleButton from "../html/interactions/CircleButton.svelte";
 
     let availableTimes = {};
     let date;
@@ -33,30 +34,32 @@
     }
 </script>
 
-<ToolbarModal>
-    <button
-        slot="left-actions"
-        class="text-blue-600 flex items-center"
-        on:click={() => ($view.component = "AppointmentsCreate")}
-    >
-        <Fa icon={faAngleLeft} /> <span>Atrás</span>
-    </button>
-    <h1 slot="modal-title">Horario disponible</h1>
-    <div slot="right-actions" />
-</ToolbarModal>
-<h3 class="mt-4 text-start font-bold italic">{date}</h3>
-{#if availableTimes.availables}
-    <div class="max-h-96 overflow-y-auto text-start mt-4">
-        {#each availableTimes.availables as available}
-            <div class="p-2 grid grid-cols-2 items-center">
-                <span>{available.interval}</span>
-                <button
-                    class="border bg-green-600 p-2 text-white"
-                    on:click={() => selectedAvailableTime(available)}
-                >
-                    Escoger
-                </button>
-            </div>
-        {/each}
+<Modal>
+    <div slot="left">
+        <CircleButton
+            icon={faAngleLeft}
+            class="text-blue-400"
+            on:click={() => ($view.component = "AppointmentsCreate")}
+        />
     </div>
-{/if}
+    <h1 slot="title">Horario disponible</h1>
+    <div slot="right" />
+    <section slot="body">
+        <h3 class="mt-4 text-start font-bold italic">{date}</h3>
+        {#if availableTimes.availables}
+            <div class="mt-4">
+                {#each availableTimes.availables as available}
+                    <div class="p-2 grid grid-cols-2 items-center">
+                        <span>{available.interval}</span>
+                        <button
+                            class="border bg-green-600 p-2 text-white"
+                            on:click={() => selectedAvailableTime(available)}
+                        >
+                            Escoger
+                        </button>
+                    </div>
+                {/each}
+            </div>
+        {/if}
+    </section>
+</Modal>

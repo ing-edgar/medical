@@ -1,15 +1,16 @@
 <script>
     import { faXmark, faSave } from "@fortawesome/free-solid-svg-icons";
-    import Fa from "svelte-fa/src/fa.svelte";
-    import ToolbarModal from "../layout/ToolbarModal.svelte";
-    import { view } from "../../../services/view";
-    import DateTime from "./DateTime.svelte";
-    import Inputs from "./Inputs.svelte";
     import { getProfessionals } from "../../../api/user";
+    import Messages from "../layout/Messages.svelte";
     import { save } from "../../../api/appointment";
     import { inputs } from "../../../services/form";
+    import { view } from "../../../services/view";
+    import Fa from "svelte-fa/src/fa.svelte";
+    import DateTime from "./DateTime.svelte";
+    import Inputs from "./Inputs.svelte";
     import { onMount } from "svelte";
-    import Messages from "../layout/Messages.svelte";
+    import Modal from "../html/modal/Modal.svelte";
+    import CircleButton from "../html/interactions/CircleButton.svelte";
 
     function store() {
         const response = save($inputs);
@@ -38,27 +39,25 @@
     }
 </script>
 
-<ToolbarModal>
-    <button
-        slot="left-actions"
-        class="text-blue-600 flex items-center"
-        on:click={() => ($view.component = null)}
-    >
-        <Fa icon={faXmark} />
-    </button>
-    <h1 slot="modal-title">Crear nueva cita</h1>
-    <div slot="right-actions">
-        <button class="text-blue-600" on:click={store}>
-            <Fa icon={faSave} />
-        </button>
+<Modal>
+    <div slot="left">
+        <CircleButton
+            class="text-red-400 flex items-center"
+            icon={faXmark}
+            on:click={() => ($view.component = null)}
+        />
     </div>
-</ToolbarModal>
+    <h1 slot="title">Crear nueva cita</h1>
+    <div slot="right">
+        <CircleButton class="text-green-400" icon={faSave} on:click={store} />
+    </div>
 
-<section
-    class="text-start text-gray-600 pt-4 
-    space-y-3 px-2 max-h-96 overflow-y-auto"
->
-    <Messages {request} />
-    <Inputs {professionals} />
-    <DateTime />
-</section>
+    <section
+        slot="body"
+        class="text-start text-gray-600 pt-4 space-y-3 px-2"
+    >
+        <Messages {request} />
+        <Inputs {professionals} />
+        <DateTime />
+    </section>
+</Modal>

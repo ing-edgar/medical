@@ -1,6 +1,7 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import AppointmentsCount from "./AppointmentsCount.svelte";
-    import { view } from "../../../../services/view";
+    const dispatch = createEventDispatcher();
 
     export let days = [];
     export let appointmentsCount;
@@ -8,8 +9,7 @@
     export { className as class };
 
     function selected_day(day) {
-        $view.component = "OpeningHourModal";
-        $view.data = day;
+        dispatch("click", day);
     }
 
     function getAppointmentsCount(date) {
@@ -36,7 +36,7 @@
                         on:click={() => selected_day(day)}
                     >
                         {day.number}
-                        {#if appointmentsCount}
+                        {#if appointmentsCount && day.isValid}
                             <AppointmentsCount
                                 count={getAppointmentsCount(day.date)}
                             />

@@ -1,7 +1,7 @@
 <script>
     import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
     import Fa from "svelte-fa/src/fa.svelte";
-    import Button from "../layout/Button.svelte";
+    import Button from "../html/interactions/Button.svelte";
     import { view } from "../../../services/view";
     import Base from "../layout/Calendar/Base.svelte";
     let weekdays = ["Do", "Lu", "Ma", "Mie", "Ju", "Vi", "Sa"];

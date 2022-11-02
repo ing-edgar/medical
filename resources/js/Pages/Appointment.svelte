@@ -1,12 +1,11 @@
 <script>
     import AppointmentsTable from "../components/admin/appointments/Table.svelte";
-    import Main from "../components/admin/layout/Main.svelte";
-    import Fa from "svelte-fa/src/fa.svelte";
+    import Button from "../components/admin/html/interactions/Button.svelte";
     import { faPlus } from "@fortawesome/free-solid-svg-icons";
-    import Button from "../components/admin/layout/Button.svelte";
+    import Main from "../components/admin/layout/Main.svelte";
     import { view, component } from "../services/view";
-    import Modal from "../components/admin/layout/Modal.svelte";
     import { page } from "@inertiajs/inertia-svelte";
+    import Fa from "svelte-fa/src/fa.svelte";
     export let appointments;
 
     function openView(component) {
@@ -37,9 +36,7 @@
 </Main>
 
 {#if $component}
-    <Modal>
-        <svelte:component this={$component} />
-    </Modal>
+    <svelte:component this={$component} />
 {/if}
 
 <style>

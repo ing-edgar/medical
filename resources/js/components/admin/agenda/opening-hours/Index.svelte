@@ -1,5 +1,4 @@
 <script>
-    import ToolbarModal from "../../layout/ToolbarModal.svelte";
     import Fa from "svelte-fa/src/fa.svelte";
     import {
         faXmark,
@@ -14,6 +13,8 @@
     } from "../../../../api/opening_hours";
     import { view } from "../../../../services/view";
     import { onMount } from "svelte";
+    import Modal from "../../html/modal/Modal.svelte";
+    import CircleButton from "../../html/interactions/CircleButton.svelte";
 
     // Es un arreglo que contiene objetos de los horarios de atención de
     // los días de la semana.
@@ -91,53 +92,53 @@
     }
 </script>
 
-<ToolbarModal>
-    <button
-        class="text-sky-600"
-        slot="left-actions"
-        on:click={() => ($view.component = null)}
-    >
-        <Fa icon={faXmark} />
-    </button>
-    <div slot="modal-title">Horario de atención</div>
-    <button
-        slot="right-actions"
-        class="text-sky-600"
-        on:click={() => ($view.component = "CreateOpeningHours")}
-    >
-        <Fa icon={faPlus} />
-    </button>
-</ToolbarModal>
-<div>
-    {#each openingHours as openingHour}
-        {#if openingHour.values.length > 0}
-            <div class="text-xs md:text-base my-2 p-2">
-                <div class="flex flex-wrap">
-                    <p class="font-semibold">
-                        {#each openingHour.weekdays as workday, index}
-                            {#if index === openingHour.weekdays.length - 1 && openingHour.weekdays.length > 1}
-                                &nbsp;y
-                            {:else if index > 0}
-                                ,
-                            {/if}
-                            {workday.name}
-                        {/each}
-                    </p>
-                    <div class="px-2 text-blue-600">
-                        <button
-                            on:click={() =>
-                                saveInStoreOpeningHoursObject(openingHour)}
-                            ><Fa icon={faPenToSquare} /></button
-                        >
+<Modal>
+    <div slot="left">
+        <CircleButton
+            class="text-red-400"
+            icon={faXmark}
+            on:click={() => ($view.component = null)}
+        />
+    </div>
+    <h1 slot="title">Horario de atención</h1>
+    <div slot="right">
+        <CircleButton
+            class="text-green-400"
+            icon={faPlus}
+            on:click={() => ($view.component = "CreateOpeningHours")}
+        />
+    </div>
+    <div slot="body">
+        {#each openingHours as openingHour}
+            {#if openingHour.values.length > 0}
+                <div class="text-xs md:text-base my-2 p-2">
+                    <div class="flex flex-wrap">
+                        <p class="font-semibold">
+                            {#each openingHour.weekdays as workday, index}
+                                {#if index === openingHour.weekdays.length - 1 && openingHour.weekdays.length > 1}
+                                    &nbsp;y
+                                {:else if index > 0}
+                                    ,
+                                {/if}
+                                {workday.name}
+                            {/each}
+                        </p>
+                        <div class="px-2 text-blue-600">
+                            <button
+                                on:click={() =>
+                                    saveInStoreOpeningHoursObject(openingHour)}
+                                ><Fa icon={faPenToSquare} /></button
+                            >
+                        </div>
                     </div>
-                </div>
 
-                {#each openingHour.values as value}
-                    <div class="text-left">
-                        {value.start_time} - {value.end_time}
-                    </div>
-                {/each}
-            </div>
-        {/if}
-    {/each}
-</div>
+                    {#each openingHour.values as value}
+                        <div class="text-left">
+                            {value.start_time} - {value.end_time}
+                        </div>
+                    {/each}
+                </div>
+            {/if}
+        {/each}
+    </div>
+</Modal>

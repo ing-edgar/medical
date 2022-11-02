@@ -7,7 +7,7 @@
 </script>
 
 <button
-    class="border px-3 py-1 rounded flex items-center space-x-2 {className}"
+    class="border flex items-center space-x-2 {className} p-2 rounded-md"
     on:click={() => dispatch("click")}
 >
     <slot />

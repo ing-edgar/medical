@@ -1,27 +1,19 @@
 <script>
     import { faXmark, faSave } from "@fortawesome/free-solid-svg-icons";
-    import ToolbarModal from "../../layout/ToolbarModal.svelte";
+    import Select from "../../html/interactions/Select.svelte";
     import { list, save } from "../../../../api/configuration";
-    import { createEventDispatcher, onMount } from "svelte";
+    import { onMount } from "svelte";
     import Messages from "../../layout/Messages.svelte";
-    import Select from "../../layout/Select.svelte";
-    import Modal from "../../layout/Modal.svelte";
-    import Fa from "svelte-fa/src/fa.svelte";
-
-    const dispatch = createEventDispatcher();
+    import { view } from "../../../../services/view";
+    import Modal from "../../html/modal/Modal.svelte";
+    import CircleButton from "../../html/interactions/CircleButton.svelte";
 
     let configuration = {
         user_id: 0,
         configurations: [],
     };
-    let request = {};
 
-    function click(componentName, open) {
-        dispatch("click", {
-            open,
-            componentName,
-        });
-    }
+    let request = {};
 
     onMount(() => getConfigurations());
 
@@ -75,28 +67,29 @@
 </script>
 
 <Modal>
-    <ToolbarModal>
-        <button
-            class="text-sky-600"
-            slot="left-actions"
-            on:click={() => click(null, false)}
-        >
-            <Fa icon={faXmark} />
-        </button>
-        <div slot="modal-title">Configuración</div>
-        <button slot="right-actions" class="text-sky-600" on:click={saving}>
-            <Fa icon={faSave} />
-        </button>
-    </ToolbarModal>
-    <div class="py-2">
-        <Messages {request} />
+    <div slot="left" class="flex items-center">
+        <CircleButton
+            class="text-red-400"
+            icon={faXmark}
+            on:click={() => ($view.component = null)}
+        />
     </div>
-    <div class="flex p-2">
-        {#each configuration.configurations as config}
-            <div>
-                <label for="" class="block font-bold">{config.label}</label>
-                <Select bind:value={config.value} />
-            </div>
-        {/each}
+    <h1 slot="title">Configuración</h1>
+    <div slot="right" class="flex items-center">
+        <CircleButton class="text-green-400" icon={faSave} on:click={saving} />
     </div>
+
+    <section slot="body">
+        <div class="py-2">
+            <Messages {request} />
+        </div>
+        <div class="flex p-2">
+            {#each configuration.configurations as config}
+                <div>
+                    <label for="" class="block font-bold">{config.label}</label>
+                    <Select bind:value={config.value} />
+                </div>
+            {/each}
+        </div>
+    </section>
 </Modal>
