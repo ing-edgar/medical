@@ -31,7 +31,7 @@
     }
 
     function selectedPatient(appointment) {
-        console.log("hola mundos");
+        console.log("hola mundo");
         $view.data.appointment = appointment;
         $view.component = "AppointmentEdit";
     }

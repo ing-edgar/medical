@@ -26,23 +26,21 @@
             class:disabled-item={!day.isValid}
             class="w-full bg-white text-gray-600 {className}"
         >
-            <div class="text-center">
-                <div class="relative" class:justify-between={day.isValid}>
-                    <button
-                        type="button"
-                        class="w-full"
-                        class:cursor-default={!day.isValid}
-                        class:current-date={day.isToday}
-                        on:click={() => selected_day(day)}
-                    >
-                        {day.number}
-                        {#if appointmentsCount && day.isValid}
-                            <AppointmentsCount
-                                count={getAppointmentsCount(day.date)}
-                            />
-                        {/if}
-                    </button>
-                </div>
+            <div class="text-center h-full" class:justify-between={day.isValid}>
+                <button
+                    type="button"
+                    class="w-full h-full"
+                    class:cursor-default={!day.isValid}
+                    class:current-date={day.isToday}
+                    on:click={() => selected_day(day)}
+                >
+                    {day.number}
+                    {#if appointmentsCount && day.isValid}
+                        <AppointmentsCount
+                            count={getAppointmentsCount(day.date)}
+                        />
+                    {/if}
+                </button>
             </div>
         </div>
     {/each}
