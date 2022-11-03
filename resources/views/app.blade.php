@@ -15,14 +15,14 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+    <?php echo app('Tightenco\Ziggy\BladeRouteGenerator')->generate(); ?>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     @inertiaHead
 </head>
-<?php echo app('Tightenco\Ziggy\BladeRouteGenerator')->generate(); ?>
 
 <body class="antialiased">
     @inertia
-    @vite('resources/js/app.js')
 </body>
 
 </html>

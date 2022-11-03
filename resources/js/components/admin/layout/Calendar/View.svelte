@@ -9,7 +9,7 @@
     export { className as class };
 
     function selected_day(day) {
-        dispatch("click", day);
+        if (day.isValid) dispatch("click", day);
     }
 
     function getAppointmentsCount(date) {

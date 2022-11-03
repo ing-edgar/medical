@@ -31,7 +31,6 @@
     }
 
     function selectedPatient(appointment) {
-        console.log("hola mundo");
         $view.data.appointment = appointment;
         $view.component = "AppointmentEdit";
     }
@@ -54,14 +53,14 @@
         />
     </div>
 
-    <div class="text-start py-1" slot="body">
+    <div class="text-start py-1">
         <h2 class="font-bold uppercase">Citas programadas</h2>
         <Table>
             <tr slot="thead">
                 <TableHead class="bg-green-200 text-start">Paciente</TableHead>
-                <TableHead class="bg-green-200 text-start"
-                    >Hora inicio</TableHead
-                >
+                <TableHead class="bg-green-200 text-start">
+                    Hora inicio
+                </TableHead>
                 <TableHead class="bg-green-200 text-start">Hora fin</TableHead>
                 <TableHead class="bg-green-200 text-start" />
             </tr>
@@ -80,8 +79,7 @@
                         <CircleButton
                             icon={faWrench}
                             class="bg-green-600 text-white"
-                            on:click={() =>
-                                selectedPatient(appointment)}
+                            on:click={() => selectedPatient(appointment)}
                         />
                     </TableDataCell>
                 </tr>

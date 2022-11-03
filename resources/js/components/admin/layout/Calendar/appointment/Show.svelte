@@ -12,6 +12,8 @@
     import Fa from "svelte-fa/src/fa.svelte";
 
     const { patient } = $view.data.appointment;
+
+    console.log("hola mundo")
 </script>
 
 <Modal>
@@ -32,7 +34,7 @@
         Cita programada de {patient.name}
     </h1>
     <div slot="right" />
-    <section slot="body" class="">
+    <section  class="">
         <div class="flex space-x-2 items-center">
             <Fa icon={faIdCard} class="text-gray-600"/>
             <span>{patient.rfc}</span>
@@ -46,4 +48,6 @@
             <span>{patient.email}</span>
         </div>
     </section>
+    {$view.data.patient} para ti tonto tu mi api
+    
 </Modal>

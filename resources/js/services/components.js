@@ -5,7 +5,7 @@ import AppointmentsCreate from '../components/admin/appointments/Create.svelte';
 import AvailableTime from '../components/admin/appointments/AvailableTime.svelte';
 import OpeningHourModal from '../components/admin/layout/Calendar/AppointmentsData.svelte';
 import EditOpeningHour from '../components/admin/layout/Calendar/opening-hour/Edit.svelte';
-import AppointmentEdit from '../components/admin/layout/Calendar/Appointments/Edit.svelte';
+import AppointmentEdit from '../components/admin/layout/Calendar/appointment/Show.svelte';
 
 export const components = [
 

@@ -35,5 +35,5 @@
             icon={faSave}
         />
     </div>
-    <section slot="body">Migrando la funcionalidad</section>
+    <section>Migrando la funcionalidad d</section>
 </Modal>

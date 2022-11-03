@@ -1,8 +1,7 @@
 import './bootstrap';
 import '../css/app.css'; 
 
-import { createInertiaApp } from '@inertiajs/inertia-svelte'
-import { Inertia } from "@inertiajs/inertia";
+import { createInertiaApp } from "@inertiajs/inertia-svelte"
 createInertiaApp({
   resolve: name => import(`./Pages/${name}.svelte`),
   setup({ el, App, props }) {

@@ -9,9 +9,7 @@ export default defineConfig({
             refresh: true,
         }),
         svelte({
-            experimental: {
-                prebundleSvelteLibraries: true,
-            },
+            prebundleSvelteLibraries: true,
         }),
     ],
 });
