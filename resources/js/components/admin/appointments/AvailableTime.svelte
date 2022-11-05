@@ -44,7 +44,7 @@
     </div>
     <h1 slot="title">Horario disponible</h1>
     <div slot="right" />
-    <section slot="body">
+    <section>
         <h3 class="mt-4 text-start font-bold italic">{date}</h3>
         {#if availableTimes.availables}
             <div class="mt-4">

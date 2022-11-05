@@ -31,23 +31,8 @@ class Appointment extends Pivot
         return $this->belongsTo(Patient::class);
     }
 
-    /**
-     * Get the user that owns the Appointment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function appointment_status(): BelongsTo
+    public function getAppointmentStatusAttribute($value)
     {
-        return $this->belongsTo(AppointmentStatus::class);
-    }
-
-    /**
-     * Get the payment_status that owns the Appointment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function payment_status(): BelongsTo
-    {
-        return $this->belongsTo(PaymentStatus::class);
+        return new $value($this);
     }
 }

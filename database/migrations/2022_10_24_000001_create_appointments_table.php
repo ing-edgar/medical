@@ -1,7 +1,5 @@
 <?php
 
-use App\Enums\AppointmentStatus;
-use App\Enums\PaymentStatus;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,6 +20,9 @@ return new class extends Migration
             $table->string('end_time');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('patient_id');
+            $table->string('appointments_status');
+            $table->string('payment_status');
+            $table->timestamps();
         });
     }
 

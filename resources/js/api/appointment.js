@@ -57,3 +57,43 @@ export const getAppointments = async (date, user_id) => {
         return error;
     }
 }
+export const confirmStatus = async (appointment_id) => {
+    try {
+        const response = API.patch(route('appointments-status.confirm', {
+            uuid: appointment_id
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+export const completeStatus = async (appointment_id) => {
+    try {
+        const response = API.patch(route('appointments-status.complete', {
+            uuid: appointment_id
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+export const cancelStatus = async (appointment_id) => {
+    try {
+        const response = API.patch(route('appointments-status.cancel', {
+            uuid: appointment_id
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+export const registerStatus = async (appointment_id) => {
+    try {
+        const response = API.patch(route('appointments-status.register', {
+            uuid: appointment_id
+        }));
+        return response;
+    } catch (error) {
+        return error;
+    }
+}

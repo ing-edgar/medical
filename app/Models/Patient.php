@@ -12,7 +12,6 @@ class Patient extends Model
     use Searchable;
 
     protected $fillable = ['name', 'email', 'phone', 'rfc'];
-
     protected $searchableFields = ['*'];
 
     public function users()

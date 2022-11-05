@@ -30,7 +30,9 @@
                 <TableDataCell>{appointment.start_time}</TableDataCell>
                 <TableDataCell>{appointment.end_time}</TableDataCell>
                 <TableDataCell>
-                    {appointment.appointment_status.name}
+                    <span class="border px-2 rounded-full {appointment.appointment_status.color}">
+                        {appointment.appointment_status.name}
+                    </span>
                 </TableDataCell>
                 <TableDataCell>
                     {appointment.payment_status.name}
@@ -51,5 +53,18 @@
 <style>
     tr:nth-child(even) {
         @apply bg-gray-200;
+    }
+
+    .registered{
+        @apply bg-yellow-600 text-white;
+    }
+    .confirmed{
+        @apply bg-purple-600 text-white;
+    }
+    .canceled{
+        @apply bg-red-600 text-white;
+    }
+    .completed{
+        @apply bg-green-600 text-white;
     }
 </style>

@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Services\Interfaces;
+
+interface AppointmentStatusInterface
+{
+    public function register();
+    public function confirm();
+    public function cancel();
+    public function complete();
+    public function getColor(): string;
+    public function getName(): string;
+}

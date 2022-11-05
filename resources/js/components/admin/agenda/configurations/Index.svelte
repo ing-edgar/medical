@@ -79,7 +79,7 @@
         <CircleButton class="text-green-400" icon={faSave} on:click={saving} />
     </div>
 
-    <section slot="body">
+    <section>
         <div class="py-2">
             <Messages {request} />
         </div>

@@ -28,6 +28,7 @@
     async function getWeekday() {
         const response = await getWeekdays();
         const openingHour = $storeOpeningHours.openingHour;
+
         // Son todos los días que no tienen un horario de atención
         openingHours.weekdays = findEmptyOpeningHours(response.data);
         // Si se ha de editar, debemos concatenar los días vacíos
@@ -52,9 +53,13 @@
 
     function findEmptyOpeningHours(weekdays) {
         const storeWeekdays = $storeOpeningHours.selected_weekdays;
-        return weekdays.filter((weekday) => {
+        console.log(storeWeekdays);
+
+       return weekdays.filter((weekday) => {
             return !storeWeekdays.includes(weekday.id);
         });
+
+        console.log(myWeekdays);
     }
 
     function changed(event, weekday) {
@@ -147,7 +152,7 @@
         </CircleButton>
     </div>
     <h1 slot="title">Horario de atención</h1>
-    <div slot="right">
+    <div slot="right" class="flex space-x-2">
         {#if openingHours.intervals.length > 0}
             <CircleButton
                 icon={faFloppyDisk}
@@ -162,7 +167,7 @@
             disabled={openingHours.selected_weekdays <= 0}
         />
     </div>
-    <section slot="body">
+    <section>
         <div class="py-2">
             <Messages {request} />
         </div>

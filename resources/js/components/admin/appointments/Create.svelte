@@ -53,7 +53,6 @@
     </div>
 
     <section
-        slot="body"
         class="text-start text-gray-600 pt-4 space-y-3 px-2"
     >
         <Messages {request} />

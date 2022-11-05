@@ -7,13 +7,32 @@
         faAngleLeft,
         faPhone,
         faEnvelope,
-        faIdCard
+        faIdCard,
     } from "@fortawesome/free-solid-svg-icons";
     import Fa from "svelte-fa/src/fa.svelte";
-
+    import Button from "../../../html/interactions/Button.svelte";
+    import {
+        registerStatus,
+        cancelStatus,
+        completeStatus,
+        confirmStatus,
+    } from "../../../../../api/appointment";
     const { patient } = $view.data.appointment;
 
-    console.log("hola mundo")
+    console.log($view.data.appointment);
+
+    function confirm() {
+        confirmStatus($view.data.appointment.id);
+    }
+    function cancel() {
+        cancelStatus($view.data.appointment.id);
+    }
+    function register() {
+        registerStatus($view.data.appointment.id);
+    }
+    function complete() {
+        completeStatus($view.data.appointment.id);
+    }
 </script>
 
 <Modal>
@@ -34,9 +53,9 @@
         Cita programada de {patient.name}
     </h1>
     <div slot="right" />
-    <section  class="">
+    <section class="">
         <div class="flex space-x-2 items-center">
-            <Fa icon={faIdCard} class="text-gray-600"/>
+            <Fa icon={faIdCard} class="text-gray-600" />
             <span>{patient.rfc}</span>
         </div>
         <div class="flex space-x-2 items-center">
@@ -48,6 +67,10 @@
             <span>{patient.email}</span>
         </div>
     </section>
-    {$view.data.patient} para ti tonto tu mi api
-    
+    <div class="flex space-x-2">
+        <Button on:click={confirm}>Confirmar</Button>
+        <Button on:click={cancel}>Cancelar</Button>
+        <Button on:click={register}>Registrar</Button>
+        <Button on:click={complete}>Completar</Button>
+    </div>
 </Modal>

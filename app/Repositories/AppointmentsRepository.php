@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Appointment;
-use App\Models\User;
 use Illuminate\Support\Collection;
 
 class AppointmentsRepository
@@ -11,7 +10,7 @@ class AppointmentsRepository
 
     public function getList(int $user_id, string $date): Collection
     {
-        $appointments = Appointment::with('patient')->where(['user_id' => $user_id, 'date' => $date])->get();
+        $appointments = Appointment::with(['patient'])->where(['user_id' => $user_id, 'date' => $date])->get();
         return $appointments;
     }
     public function getCount(int $user_id): Collection

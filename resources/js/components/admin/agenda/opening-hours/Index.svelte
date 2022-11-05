@@ -108,7 +108,7 @@
             on:click={() => ($view.component = "CreateOpeningHours")}
         />
     </div>
-    <div slot="body">
+    <div>
         {#each openingHours as openingHour}
             {#if openingHour.values.length > 0}
                 <div class="text-xs md:text-base my-2 p-2">

@@ -7,6 +7,7 @@ use App\Http\Controllers\AvailableTimeController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OpeningHourController;
+use App\Http\Controllers\UpdateAppointmentStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeekdayController;
 use App\Services\UserRoute;
@@ -29,6 +30,14 @@ Route::prefix('admin')->group(function () {
     Route::get('available-times', AvailableTimeController::class)->name('users.availableTimes');
     Route::get('appointments/count', [AppointmentController::class, 'getAppointmentsCount'])->name('appointments.count');
     Route::get('appointments/list', [AppointmentController::class, 'getList'])->name('appointments.list');
+
+    Route::prefix('appointments-status')->controller(UpdateAppointmentStatusController::class)->group(function () {
+        Route::patch('cancel', 'cancel')->name('appointments-status.cancel');
+        Route::patch('confirm', 'confirm')->name('appointments-status.confirm');
+        Route::patch('register', 'coregisternfirm')->name('appointments-status.register');
+        Route::patch('complete', 'complete')->name('appointments-status.complete');
+    });
+
     Route::get('/', function () {
         return inertia('Welcome', props: ['title' => 'edgar']);
     });
