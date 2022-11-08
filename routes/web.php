@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('appointment/{id}/confirmation', [AppointmentController::class, 'confirmation'])->name(name: 'confirmation.appointment');
+
 Route::prefix('admin')->group(function () {
 
     Route::get('users/professionals', [UserController::class, 'getProfessionals'])->name('users.professionals');
@@ -50,11 +52,11 @@ Route::prefix('admin')->group(function () {
 
     Route::resources([
         'configurations' => ConfigurationController::class,
-        'opening-hours'  => OpeningHourController::class,
-        'appointments'   => AppointmentController::class,
-        'articles'       => ArticleController::class,
-        'events'         => EventController::class,
-        'weekdays'       => WeekdayController::class,
+        'opening-hours' => OpeningHourController::class,
+        'appointments' => AppointmentController::class,
+        'articles' => ArticleController::class,
+        'events' => EventController::class,
+        'weekdays' => WeekdayController::class,
     ]);
     //UserRoute::routes();
 });

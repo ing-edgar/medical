@@ -11,7 +11,7 @@ trait HasPatient
     /**
      * The patients that belong to the HasPatient
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function patients(): BelongsToMany
     {

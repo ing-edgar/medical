@@ -24,6 +24,6 @@ trait HasAppointment
     {
         $this->appointments()->attach($patient_id, $attributes, false);
 
-        return $this->appointments()->where(['patients.id' => $patient_id, 'date' => $attributes['date']])->first();
+        return Appointment::where(['patient_id' => $patient_id, 'date' => $attributes['date']])->first();
     }
 }

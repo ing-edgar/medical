@@ -9,7 +9,7 @@ class UpdateAppointmentStatusController extends Controller
 {
     public function cancel(Request $request)
     {
-        $appointment = Appointment::find($request->uuid);
+        $appointment = Appointment::with('patient')->find($request->uuid);
         $status = $appointment->appointment_status;
         $status = new $status($appointment);
         return $status->cancel();
@@ -28,7 +28,7 @@ class UpdateAppointmentStatusController extends Controller
         $status = new $status($appointment);
         return $status->confirm();
     }
-    
+
     public function complete(Request $request)
     {
         $appointment = Appointment::find($request->uuid);

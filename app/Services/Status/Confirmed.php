@@ -2,7 +2,9 @@
 
 namespace App\Services\Status;
 
+use App\Mail\CanceledAppointment;
 use App\Services\AppointmentStatusConcrete;
+use Illuminate\Support\Facades\Mail;
 use JsonSerializable;
 
 class Confirmed extends AppointmentStatusConcrete implements JsonSerializable
@@ -11,6 +13,7 @@ class Confirmed extends AppointmentStatusConcrete implements JsonSerializable
     {
         $this->appointment->appointment_status = Limbo::class;
         $this->appointment->update();
+        Mail::to($this->appointment->patient->email)->send(new CanceledAppointment($this->appointment));
         return response()->json(['Estado actualizado correctamente', $this->appointment]);
     }
 
@@ -34,8 +37,8 @@ class Confirmed extends AppointmentStatusConcrete implements JsonSerializable
     public function getTransition(): array
     {
         return [
-            ['name' => 'Completado', 'route' => 'appointments-status.complete', 'color'=>'completed'],
-            ['name' => 'Cancelado', 'route' => 'appointments-status.cancel', 'color'=>'canceled']
+            ['name' => 'Completado', 'route' => 'appointments-status.complete', 'color' => 'completed'],
+            ['name' => 'Cancelado', 'route' => 'appointments-status.cancel', 'color' => 'canceled']
         ];
     }
 }
