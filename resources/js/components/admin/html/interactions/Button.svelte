@@ -12,3 +12,19 @@
 >
     <slot />
 </button>
+
+
+<style>
+    .registered {
+        @apply bg-yellow-600 text-white;
+    }
+    .confirmed {
+        @apply bg-purple-600 text-white;
+    }
+    .canceled {
+        @apply bg-red-600 text-white;
+    }
+    .completed {
+        @apply bg-green-600 text-white;
+    }
+</style>

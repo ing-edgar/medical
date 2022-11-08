@@ -35,4 +35,8 @@ class Appointment extends Pivot
     {
         return new $value($this);
     }
+    public function getPaymentStatusAttribute($value)
+    {
+        return new $value($this);
+    }
 }

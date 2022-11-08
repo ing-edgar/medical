@@ -10,4 +10,5 @@ interface AppointmentStatusInterface
     public function complete();
     public function getColor(): string;
     public function getName(): string;
+    public function getTransition(): array;
 }

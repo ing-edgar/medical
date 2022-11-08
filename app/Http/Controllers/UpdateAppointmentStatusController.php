@@ -36,4 +36,11 @@ class UpdateAppointmentStatusController extends Controller
         $status = new $status($appointment);
         return $status->complete();
     }
+
+    public function paid(Request $request){
+        $appointment = Appointment::find($request->uuid);
+        $status = $appointment->payment_status;
+        $status = new $status($appointment);
+        return $status->paid();
+    }
 }

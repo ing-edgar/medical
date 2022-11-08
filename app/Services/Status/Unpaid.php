@@ -2,33 +2,32 @@
 
 namespace App\Services\Status;
 
-use App\Services\AppointmentStatusConcrete;
 use JsonSerializable;
-
-class Limbo extends AppointmentStatusConcrete implements JsonSerializable
+use App\Services\PaymentStatusConcrete;
+use App\Services\Status\Paid;
+class Unpaid extends PaymentStatusConcrete implements JsonSerializable
 {
-    public function confirm()
+    public function paid()
     {
-        $this->appointment->appointment_status = Confirmed::class;
+        $this->appointment->payment_status = Paid::class;
         $this->appointment->update();
         return response()->json(['Estado actualizado correctamente', $this->appointment]);
-        
     }
 
     public function getColor(): string
     {
-        return 'canceled';
+        return "registered";
     }
 
     public function getName(): string
     {
-        return 'Por asignar';
+        return 'No pagado';
     }
 
     public function getTransition(): array
     {
         return [
-            ['name' => 'Confirmado', 'route' => 'appointments-status.confirm', 'color' => 'confirmed']
+            ['name' => 'Pagado', 'route' => 'payment-status.paid', 'color' => 'completed'],
         ];
     }
 }

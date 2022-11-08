@@ -7,18 +7,18 @@ use JsonSerializable;
 
 class Confirmed extends AppointmentStatusConcrete implements JsonSerializable
 {
-    public function cancel(): bool
+    public function cancel()
     {
         $this->appointment->appointment_status = Limbo::class;
         $this->appointment->update();
-        return true;
+        return response()->json(['Estado actualizado correctamente', $this->appointment]);
     }
 
-    public function complete(): bool
+    public function complete()
     {
         $this->appointment->appointment_status = Completed::class;
         $this->appointment->update();
-        return true;
+        return response()->json(['Estado actualizado correctamente', $this->appointment]);
     }
 
     public function getColor(): string
@@ -31,5 +31,11 @@ class Confirmed extends AppointmentStatusConcrete implements JsonSerializable
         return 'Confirmado';
     }
 
-    
+    public function getTransition(): array
+    {
+        return [
+            ['name' => 'Completado', 'route' => 'appointments-status.complete', 'color'=>'completed'],
+            ['name' => 'Cancelado', 'route' => 'appointments-status.cancel', 'color'=>'canceled']
+        ];
+    }
 }

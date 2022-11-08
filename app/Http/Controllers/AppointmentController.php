@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\User;
 use App\Repositories\AppointmentsRepository;
 use App\Services\Status\Registered;
+use App\Services\Status\Unpaid;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,7 @@ class AppointmentController extends Controller
         }, 'user' => function ($query) {
             $query->select('id', 'name');
         }])->get();
-       
+
         return Inertia(component: 'Appointment', props: compact('appointments'));
     }
 
@@ -48,7 +49,7 @@ class AppointmentController extends Controller
             'start_time' => $request->intervals['start_time'],
             'end_time' => $request->intervals['end_time'],
             'appointment_status' => Registered::class,
-            'payment_status' => 'Hello'
+            'payment_status' => Unpaid::class
         ]);
 
 

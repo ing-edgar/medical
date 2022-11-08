@@ -11,27 +11,17 @@
     } from "@fortawesome/free-solid-svg-icons";
     import Fa from "svelte-fa/src/fa.svelte";
     import Button from "../../../html/interactions/Button.svelte";
-    import {
-        registerStatus,
-        cancelStatus,
-        completeStatus,
-        confirmStatus,
-    } from "../../../../../api/appointment";
-    const { patient } = $view.data.appointment;
+    import { changeStatus } from "../../../../../api/appointment";
+    let { patient, appointment_status, payment_status, id } =
+        $view.data.appointment;
 
-    console.log($view.data.appointment);
-
-    function confirm() {
-        confirmStatus($view.data.appointment.id);
-    }
-    function cancel() {
-        cancelStatus($view.data.appointment.id);
-    }
-    function register() {
-        registerStatus($view.data.appointment.id);
-    }
-    function complete() {
-        completeStatus($view.data.appointment.id);
+    function saveStatus(route_name) {
+        changeStatus(id, route_name)
+            .then((response) => {
+                appointment_status = response.data[1].appointment_status;
+                payment_status = response.data[1].payment_status;
+            })
+            .catch((error) => console.log(error));
     }
 </script>
 
@@ -67,10 +57,59 @@
             <span>{patient.email}</span>
         </div>
     </section>
-    <div class="flex space-x-2">
-        <Button on:click={confirm}>Confirmar</Button>
-        <Button on:click={cancel}>Cancelar</Button>
-        <Button on:click={register}>Registrar</Button>
-        <Button on:click={complete}>Completar</Button>
+    <div class="space-y-2">
+        <div class="flex space-x-2">
+            <h1 class="text-md font-bold uppercase">Estado de la cita</h1>
+            <span
+                class="px-2 rounded-full {appointment_status.color} 
+            flex-start"
+            >
+                {appointment_status.name}
+            </span>
+        </div>
+
+        <div class="flex space-x-2">
+            {#each appointment_status.transitions as transition}
+                <Button
+                    on:click={() => saveStatus(transition.route)}
+                    class={transition.color}
+                >
+                    {transition.name}
+                </Button>
+            {/each}
+        </div>
+
+        <div class="flex space-x-2">
+            <h1 class="text-md font-bold uppercase">Estado de pago</h1>
+            <span class="px-2 rounded-full {payment_status.color}">
+                {payment_status.name}
+            </span>
+        </div>
+
+        <div class="flex space-x-2">
+            {#each payment_status.transitions as transition}
+                <Button
+                    on:click={() => saveStatus(transition.route)}
+                    class={transition.color}
+                >
+                    {transition.name}
+                </Button>
+            {/each}
+        </div>
     </div>
 </Modal>
+
+<style>
+    .registered {
+        @apply bg-yellow-600 text-white;
+    }
+    .confirmed {
+        @apply bg-purple-600 text-white;
+    }
+    .canceled {
+        @apply bg-red-600 text-white;
+    }
+    .completed {
+        @apply bg-green-600 text-white;
+    }
+</style>

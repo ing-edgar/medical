@@ -38,6 +38,10 @@ Route::prefix('admin')->group(function () {
         Route::patch('complete', 'complete')->name('appointments-status.complete');
     });
 
+    Route::prefix('payment-status')->controller(UpdateAppointmentStatusController::class)->group(function () {
+        Route::patch('paid', 'paid')->name('payment-status.paid');
+    });
+
     Route::get('/', function () {
         return inertia('Welcome', props: ['title' => 'edgar']);
     });
