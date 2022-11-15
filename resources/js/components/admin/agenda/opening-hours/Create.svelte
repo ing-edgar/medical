@@ -1,18 +1,14 @@
 <script>
-    import { onMount } from "svelte";
+    import {onMount} from "svelte";
     import Intervals from "./Intervals.svelte";
-    import { storeOpeningHours, save } from "../../../../api/opening_hours.js";
-    import { getWeekdays } from "../../../../api/weekday.js";
+    import {storeOpeningHours, save} from "@/api/opening_hours";
+    import {getWeekdays} from "@/api/weekday";
     import moment from "moment/moment";
-    import Messages from "../../layout/Messages.svelte";
-    import { view } from "../../../../services/view";
-    import {
-        faFloppyDisk,
-        faPlus,
-        faAngleLeft,
-    } from "@fortawesome/free-solid-svg-icons";
-    import Modal from "../../html/modal/Modal.svelte";
+    import {faFloppyDisk, faPlus} from "@fortawesome/free-solid-svg-icons";
+    import Modal from "@/components/global/html/modal/Modal.svelte";
     import CircleButton from "../../html/interactions/CircleButton.svelte";
+    import BackToolbar from "@/components/global/html/modal/BackAndCloseToolbar.svelte";
+    import Form from "@/components/global/html/forms/Form.svelte";
 
     let openingHours = {
         weekdays: [],
@@ -28,13 +24,10 @@
     async function getWeekday() {
         const response = await getWeekdays();
         const openingHour = $storeOpeningHours.openingHour;
-
         // Son todos los días que no tienen un horario de atención
         openingHours.weekdays = findEmptyOpeningHours(response.data);
-        // Si se ha de editar, debemos concatenar los días vacíos
-        // con los que actualmente tiene el grupo, junto
+        // Si se ha de editar, debemos concatenar los días vacíos con los que actualmente tiene el grupo, junto
         // con sus intervalos
-
         if (openingHour.weekdays) {
             openingHours.selected_weekdays = getSelectedWeekdays(openingHour);
             openingHours.weekdays = openingHour.weekdays.concat(
@@ -45,7 +38,6 @@
     }
 
     function getSelectedWeekdays(openingHour) {
-        console.log($storeOpeningHours);
         return $storeOpeningHours.selected_weekdays.filter((id) =>
             openingHour.weekdays.some((weekday) => weekday.id === id)
         );
@@ -55,11 +47,9 @@
         const storeWeekdays = $storeOpeningHours.selected_weekdays;
         console.log(storeWeekdays);
 
-       return weekdays.filter((weekday) => {
+        return weekdays.filter((weekday) => {
             return !storeWeekdays.includes(weekday.id);
         });
-
-        console.log(myWeekdays);
     }
 
     function changed(event, weekday) {
@@ -80,23 +70,11 @@
     }
 
     function saveOpeningHours() {
-        const response = save({
+        save({
             user_id: 1,
             openingHoursAttr: buildOpeningHours(),
             deleted_weekdays: openingHours.deleted_weekdays,
-        })
-            .then((response) => {
-                if (openingHours.selected_weekdays <= 0) {
-                    openingHours.intervals = [];
-                }
-                request.status = response.status;
-                request.message = response.data;
-            })
-            .catch((error) => {
-                request.status = response.status;
-                request.message = "Por favor, corrige los siguientes errores";
-                request.data = Object.entries(error.data.errors);
-            });
+        });
     }
 
     function buildOpeningHours() {
@@ -142,41 +120,28 @@
 </script>
 
 <Modal>
-    <div slot="left">
-        <CircleButton
-            class="text-blue-400 flex items-center"
-            icon={faAngleLeft}
-            on:click={() => ($view.component = "ShowOpeningHours")}
-        >
-            Atrás
-        </CircleButton>
-    </div>
-    <h1 slot="title">Horario de atención</h1>
-    <div slot="right" class="flex space-x-2">
+    <BackToolbar slot="toolbar" backComponent="ShowOpeningHours">
+        <h1 slot="title">Horario de atención</h1>
         {#if openingHours.intervals.length > 0}
             <CircleButton
                 icon={faFloppyDisk}
-                class="text-green-400"
+                class="circle-button text-save"
                 on:click={saveOpeningHours}
             />
         {/if}
         <CircleButton
             icon={faPlus}
-            class="text-purple-400"
+            class="circle-button text-plus"
             on:click={addNewEntry}
-            disabled={openingHours.selected_weekdays <= 0}
-        />
-    </div>
-    <section>
-        <div class="py-2">
-            <Messages {request} />
-        </div>
+            disabled={openingHours.selected_weekdays <= 0}></CircleButton>
+    </BackToolbar>
+    <Form>
         {#if openingHours.weekdays.length > 0}
-            <div id="workdays" class="flex space-x-2 ">
+            <div class="weekdays-list">
                 {#each openingHours.weekdays as weekday}
                     <div>
                         <label for="workdays_id" class="block"
-                            >{weekday.name}
+                        >{weekday.name}
                         </label>
                         <input
                             type="checkbox"
@@ -200,11 +165,5 @@
         {:else}
             <p>No hay días libres para asignar un horario de atención</p>
         {/if}
-    </section>
-</Modal>
-
-<style>
-    button:disabled {
-        @apply text-gray-300;
-    }
-</style>
+    </Form>
+</Modal>+

@@ -1,11 +1,11 @@
 <script>
     import ConfigMenu from "../components/admin/agenda/config-menu.svelte";
-    import Base from "../components/admin/layout/Calendar/Base.svelte";
+    import Calendar from "../components/global/html/calendar/Calendar.svelte";
     import Main from "../components/admin/layout/Main.svelte";
-    import { getAppointmentsCount } from "../api/appointment";
-    import { onMount } from "svelte";
-    import Modal from "../components/admin/html/modal/Modal.svelte";
-    import { component, view } from "../services/view";
+    import {getAppointmentsCount} from "../api/appointment";
+    import {onMount} from "svelte";
+    import {component, view} from "../services/view";
+
     let appointmentsCount;
 
     onMount(() => getAppointmentsCountList(1));
@@ -30,11 +30,13 @@
 
 <Main>
     <div slot="title">Agenda</div>
-    <ConfigMenu />
+    <ConfigMenu/>
     {#if appointmentsCount}
-        <Base class="p-2" {appointmentsCount} on:click={selected_day} />
+        <div class="calendar">
+            <Calendar {appointmentsCount} on:click={selected_day}/>
+        </div>
     {/if}
 </Main>
 {#if $component}
-    <svelte:component this={$component} />
+    <svelte:component this={$component}/>
 {/if}

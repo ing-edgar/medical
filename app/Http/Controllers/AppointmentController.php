@@ -56,9 +56,8 @@ class AppointmentController extends Controller
             'payment_status' => Unpaid::class
         ]);
         Mail::to($patient->email)->send(new CreatedAppointment($patient, $appointment->id));
-        $request->session()->flash('success', 'Cita creada exitosamente');
 
-        return response()->json(['success' => true, 'url' => '/admin/appointments'], 201);
+        return response()->json('Se ha creado exitósamente la cita. Un correo electrónico se enviará a tu cuenta, allí debes confirmarla ', 201);
     }
 
     private function validations($values)
@@ -70,7 +69,7 @@ class AppointmentController extends Controller
             'patient_data.email.required' => 'El email del paciente es requerido',
             'patient_data.email.email' => 'El campo email no está bien formado',
             'patient_data.phone.required' => 'El teléfono del paciente es requerido',
-            'date.required' => 'Se requiere de la fecha de la cita',
+            'date.required' => 'Se requiere la fecha de la cita',
             'intervals.start_time.required' => 'No existe hora de la cita',
             'user_id' => 'No ha escogido un profesional'
         ];

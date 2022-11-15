@@ -1,13 +1,11 @@
 <script>
-    import { onMount } from "svelte";
+    import {onMount} from "svelte";
     import moment from "moment/moment";
     import "moment/locale/es";
-    import { buildDays } from "../../../../services/calendar";
-    import Fa from "svelte-fa/src/fa.svelte";
-    import {
-        faAngleLeft,
-        faAngleRight,
-    } from "@fortawesome/free-solid-svg-icons";
+    import {buildDays} from "@/services/calendar";
+    import {faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";
+    import CircleButton from "@/components/admin/html/interactions/CircleButton.svelte";
+    import {inputs} from "@/services/form";
 
     export let days = [];
     let date;
@@ -52,21 +50,23 @@
     onMount(() => {
         currentDate = moment();
         month_number = currentDate.month(); // Número del mes actual
-        date = currentDate.clone().month(month_number); // Clonar la fecha actual para que sea dinámica y se pueda mover por el calendario.
+        date = currentDate.clone().month(month_number);
+        if ($inputs.date) {
+            date = moment($inputs.date);
+            month_number = date.month();
+        }
         getCalendar();
     });
 </script>
 
-<div class="flex justify-center items-center border-t border-l  border-r border-gray-400 p-2">
-    <button class="text-sky-600 px-2" on:click={prevMonth}>
-        <Fa icon={faAngleLeft} />
-    </button>
+<div class="months">
+    <CircleButton class="circle-button text-save" icon={faAngleLeft} on:click={prevMonth}>
+    </CircleButton>
     {#if date}
-        <h1 class="font-semibold text-center text-lg capitalize">
+        <h1>
             {month_name}
         </h1>
     {/if}
-    <button class="text-sky-600 px-2" on:click={nextMonth}>
-        <Fa icon={faAngleRight} />
-    </button>
+    <CircleButton class="circle-button text-save bright" icon={faAngleRight} on:click={nextMonth}>
+    </CircleButton>
 </div>

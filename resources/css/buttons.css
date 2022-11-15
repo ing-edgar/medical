@@ -1,0 +1,48 @@
+.circle-button {
+    display: flex;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #1a1a1a;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar .circle-button {
+    background-color: #373636;
+}
+
+.circle-button > svg {
+    width: 12px;
+    height: 12px;
+}
+
+.circle-button:hover {
+    background-color: #4a4949;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem;
+    border: 1px solid #929292;
+    border-radius: 0.3rem;
+}
+
+.btn-primary {
+    border: 1px solid #0283c5;
+    background: #0283c5 !important;
+    color: white;
+}
+
+.btn-success {
+    border: 1px solid #025328;
+    background: #025328 !important;
+    color: white;
+}
+
+.btn-danger {
+    border: 1px solid red;
+    background: red !important;
+    color: white;
+}

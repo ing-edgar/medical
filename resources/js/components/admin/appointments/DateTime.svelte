@@ -1,48 +1,43 @@
 <script>
-    import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+    import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
     import Fa from "svelte-fa/src/fa.svelte";
-    import Button from "../html/interactions/Button.svelte";
-    import { view } from "../../../services/view";
-    import Base from "../layout/Calendar/Base.svelte";
+    import {view} from "@/services/view";
+    import Calendar from "../../global/html/calendar/Calendar.svelte";
+
     let weekdays = ["Do", "Lu", "Ma", "Mie", "Ju", "Vi", "Sa"];
 
-    import { inputs } from "../../../services/form";
+    import {inputs} from "../../../services/form";
+    import AvailableTime from "@/components/admin/appointments/AvailableTime.svelte";
+
     let open = false;
 
     function selectedDate(event) {
+        open = false;
         if (!$inputs.professional_id) {
             alert("Seleccione un profesional");
             return;
         }
         $inputs.date = event.detail.date;
-        $view.component = "AvailableTime";
     }
 </script>
 
-<div>
-    <label for="" class="block">¿Cuándo quiere la cita?</label>
-    <span class="text-sm text-gray-700 italic"
-        >Seleccione una fecha para buscar el horario disponible</span
-    >
-    <div class="relative">
-        <div class="flex">
-            <Button
-                class="bg-sky-600 text-white"
-                on:click={() => (open = !open)}
-            >
-                <Fa icon={faCalendarAlt} /> <span>Seleccione fecha</span>
-            </Button>
-            <div
-                class="border border-gray-400 rounded-md ml-2 w-1/2 
-            text-gray-400 align-middle p-2 bg-gray-200"
-            >
-                <span>aaaa-mm-dd</span>
-            </div>
-        </div>
+<div class="opening-hours">
+    <div class="form-group">
+        <label for="" class="block">Seleccione una fecha</label>
+        <div class="form-control" disabled>{$inputs.date ?? 'aaaa-mm-dd'}</div>
+        <button on:click={()=>open=!open}>
+            <Fa icon={faCalendarAlt}></Fa>
+        </button>
         {#if open}
-            <div class="absolute text-xs bottom-11 left-0 p-0">
-                <Base {weekdays} class="p-1" on:click={selectedDate} />
+            <div class="calendar calendar-mini">
+                <Calendar class="day-mini" {weekdays} on:click={selectedDate}/>
             </div>
         {/if}
     </div>
+    {#if $inputs.date}
+        <div class="form-group">
+            <label>Seleccione una hora</label>
+            <AvailableTime></AvailableTime>
+        </div>
+    {/if}
 </div>

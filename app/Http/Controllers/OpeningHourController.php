@@ -30,7 +30,7 @@ class OpeningHourController extends Controller
         $user = User::findOrFail($request->user_id);
         $user->addOpeningHour($request->deleted_weekdays, $request->openingHours);
 
-        return response()->json('Se ha actualizado un horario de atención en la agenda', 201);
+        return response()->json('Se actualizó el horario de atención correctamente', 201);
     }
 
     /**

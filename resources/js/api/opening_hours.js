@@ -1,5 +1,6 @@
 import API from "../services/Api";
-import { writable } from 'svelte/store';
+import {writable} from 'svelte/store';
+import {request} from "../services/request";
 
 export const storeOpeningHours = writable({
     selected_weekdays: [], //union ids
@@ -20,18 +21,22 @@ export const list = async (id) => {
 }
 
 // Método que permite guardar un horario de atención
-export const save = async (values) => {
-    try {
+export const save = (values) => {
 
-        const response = API.post(route('opening-hours.store'), {
-            user_id: values.user_id,
-            openingHours: values.openingHoursAttr,
-            deleted_weekdays: values.deleted_weekdays,
+
+    API.post(route('opening-hours.store'), {
+        user_id: values.user_id,
+        openingHours: values.openingHoursAttr,
+        deleted_weekdays: values.deleted_weekdays,
+    }).then(res => {
+        request.set({
+            status: res.status,
+            data: {
+                message: res.data
+            }
         });
-        return response;
-    } catch (error) {
-        return error;
-    }
+    });
+
 }
 
 // Método que permite actualizar un horario de atención

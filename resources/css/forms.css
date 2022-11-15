@@ -1,0 +1,58 @@
+.messages {
+    display: grid;
+    grid-template-areas: "icon message close";
+    grid-template-columns: 30px 1fr 40px;
+    color: white;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+
+}
+
+.messages.success {
+    border: 1px solid green;
+    color: green;
+}
+
+.messages.error {
+    border: 1px solid red;
+    color: red;
+}
+
+.messages > svg {
+    font-size: large;
+}
+
+.messages > .close {
+    grid-area: close;
+    justify-self: end;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.form-group > .form-control {
+    padding: 0.5rem;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
+    width: 100%;
+}
+
+.form-group > button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2.3rem 0.8rem;
+    color: gray;
+}
+
+.form-control:focus {
+    outline: none;
+    border: 2px solid #0ea4e7;
+}
+
+.messages > ul {
+    padding-left: 1rem;
+}

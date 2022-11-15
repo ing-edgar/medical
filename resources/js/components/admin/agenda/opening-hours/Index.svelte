@@ -1,20 +1,13 @@
 <script>
     import Fa from "svelte-fa/src/fa.svelte";
-    import {
-        faXmark,
-        faPlus,
-        faPenToSquare,
-    } from "@fortawesome/free-solid-svg-icons";
+    import {faPen, faPlus} from "@fortawesome/free-solid-svg-icons";
 
-    import {
-        storeOpeningHours,
-        list,
-        findIndex,
-    } from "../../../../api/opening_hours";
-    import { view } from "../../../../services/view";
-    import { onMount } from "svelte";
-    import Modal from "../../html/modal/Modal.svelte";
-    import CircleButton from "../../html/interactions/CircleButton.svelte";
+    import {findIndex, list, storeOpeningHours,} from "../../../../api/opening_hours";
+    import {view} from "../../../../services/view";
+    import {onMount} from "svelte";
+    import Modal from "@/components/global/html/modal/Modal.svelte";
+    import CloseToolbar from "@/components/global/html/modal/CloseToolbar.svelte";
+    import CircleButton from "@/components/admin/html/interactions/CircleButton.svelte";
 
     // Es un arreglo que contiene objetos de los horarios de atención de
     // los días de la semana.
@@ -46,7 +39,7 @@
 
             if (!openingHour) {
                 openingHours.push({
-                    weekdays: [{ id: day.id, name: day.name }],
+                    weekdays: [{id: day.id, name: day.name}],
                     values: hours,
                 });
             } else {
@@ -61,6 +54,7 @@
         });
         openingHours = openingHours;
     }
+
     /**
      * Para no tener elementos duplicados buscamos si ya existe una día con la jornada
      * horaria dada
@@ -93,52 +87,35 @@
 </script>
 
 <Modal>
-    <div slot="left">
-        <CircleButton
-            class="text-red-400"
-            icon={faXmark}
-            on:click={() => ($view.component = null)}
-        />
-    </div>
-    <h1 slot="title">Horario de atención</h1>
-    <div slot="right">
-        <CircleButton
-            class="text-green-400"
-            icon={faPlus}
-            on:click={() => ($view.component = "CreateOpeningHours")}
-        />
-    </div>
-    <div>
-        {#each openingHours as openingHour}
-            {#if openingHour.values.length > 0}
-                <div class="text-xs md:text-base my-2 p-2">
-                    <div class="flex flex-wrap">
-                        <p class="font-semibold">
-                            {#each openingHour.weekdays as workday, index}
-                                {#if index === openingHour.weekdays.length - 1 && openingHour.weekdays.length > 1}
-                                    &nbsp;y
-                                {:else if index > 0}
-                                    ,
-                                {/if}
-                                {workday.name}
-                            {/each}
-                        </p>
-                        <div class="px-2 text-blue-600">
-                            <button
-                                on:click={() =>
-                                    saveInStoreOpeningHoursObject(openingHour)}
-                                ><Fa icon={faPenToSquare} /></button
-                            >
-                        </div>
-                    </div>
-
-                    {#each openingHour.values as value}
-                        <div class="text-left">
-                            {value.start_time} - {value.end_time}
-                        </div>
+    <CloseToolbar slot="toolbar">
+        <h1 slot="title">Horario de atención</h1>
+        <CircleButton icon={faPlus} class="circle-button text-plus"
+                      on:click={()=>$view.component='CreateOpeningHours'}></CircleButton>
+    </CloseToolbar>
+    {#each openingHours as openingHour}
+        {#if openingHour.values.length > 0}
+            <div class="weekdays-list">
+                <p>
+                    {#each openingHour.weekdays as workday, index}
+                        {#if index === openingHour.weekdays.length - 1 && openingHour.weekdays.length > 1}
+                            &nbsp;y
+                        {:else if index > 0}
+                            ,
+                        {/if}
+                        {workday.name}
                     {/each}
+                </p>
+                <CircleButton class="text-green"
+                              on:click={() =>saveInStoreOpeningHoursObject(openingHour)}
+                              icon={faPen}>
+                </CircleButton>
+            </div>
+
+            {#each openingHour.values as value}
+                <div>
+                    {value.start_time} - {value.end_time}
                 </div>
-            {/if}
-        {/each}
-    </div>
+            {/each}
+        {/if}
+    {/each}
 </Modal>

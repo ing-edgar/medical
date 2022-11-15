@@ -11,6 +11,7 @@ export function buildDays(month, today) {
             date: start_day.format('YYYY-MM-DD'),
             number: start_day.format('D'),
             isToday: today.isSame(start_day, 'date'),
+            isGreaterThanToday: start_day.month() > today.month() || start_day.year() > today.year()
         }
         days.push(day);
         start_day = start_day.clone().add(1, 'd');

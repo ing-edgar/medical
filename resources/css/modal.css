@@ -1,0 +1,78 @@
+.modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(16, 18, 20, 0.50);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.modal > .content {
+    max-width: 50%;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+
+/**Estilos de todos los elementos de la barra de herramientas de nuestro mod**/
+.modal > .content > .toolbar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #1d1d1d;
+    padding: 1rem 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    align-items: center;
+}
+
+.toolbar > .left-window-buttons, .toolbar > .right-window-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar > .left-window-buttons > :not([hidden]), .toolbar > .right-window-buttons > :not([hidden]) {
+    margin-right: 0.2rem;
+}
+
+.toolbar > .right-window-buttons {
+    justify-content: right;
+}
+
+.modal > .content > .toolbar > h1 {
+    color: white;
+    text-align: center;
+}
+
+
+/**Estilos para el texto de los botones del toolbar**/
+.toolbar * .text-close {
+    color: #fd6262;
+}
+
+.toolbar * .text-plus {
+    color: #6b6bf4;
+}
+
+.modal > .content > .main {
+    padding: 1rem;
+    max-height: 30rem;
+    overflow-y: auto;
+}
+
+/**Estilos para el texto dentro del modal**/
+.weekdays-list {
+    display: flex;
+}
+
+.weekdays-list > :not([hidden]) {
+    margin-right: 1rem;
+}
+
+
+
+
+
+
+

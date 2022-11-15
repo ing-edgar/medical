@@ -39,7 +39,7 @@
                 </TableDataCell>
                 <TableDataCell>{appointment.user.name}</TableDataCell>
                 <TableDataCell>
-                    <Button class="bg-green-600 text-white">
+                    <Button class="btn">
                         <Fa icon={faWrench} /> <span>Administrar</span>
                     </Button>
                 </TableDataCell>

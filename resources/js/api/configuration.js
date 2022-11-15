@@ -1,4 +1,6 @@
 import API from "../services/Api";
+import {inputs} from "@/services/form";
+import {request} from "@/services/request";
 
 
 // Método que permite obtener una colección de citas.
@@ -15,16 +17,29 @@ export const list = async (params) => {
 }
 
 // Método que permite guardar una cita
-export const save = async (values) => {
-    try {
-        const response = await API.post(route('configurations.store'), {
-            user_id: values.user_id,
-            configurations: values.configurations
+export const save = (values) => {
 
+    API.post(route('configurations.store'), {
+        user_id: values.user_id,
+        configurations: values.configurations
+
+    }).then(res => {
+        request.set({
+            status: res.status,
+            data: {
+                message: res.data
+            }
         });
+        inputs.set({})
+    }).catch(error => {
+        console.log(error.data.errors)
+        request.set({
+            status: error.status,
+            data: {
+                message: 'Por favor, corrije los siguientes errores',
+                errors: error.data.errors
+            }
+        })
+    });
 
-        return response;
-    } catch (err) {
-        return err;
-    }
 }

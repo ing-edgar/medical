@@ -3,7 +3,7 @@ import { components } from "../services/components";
 import { inputs } from './form';
 export const view = writable({
     component: null, // Nombre del componente
-    data: null // Los datos alojados en el modal
+    data: null // Los datos alojados en el mod
 });
 
 // Buscará el componente y lo devolverá para su ejecución

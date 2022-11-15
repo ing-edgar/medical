@@ -1,3 +1,10 @@
+@import "modal.css";
+@import "buttons.css";
+@import "typography.css";
+@import "forms.css";
+@import "calendar.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+

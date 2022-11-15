@@ -1,18 +1,19 @@
 <script>
     import CircleButton from "../../html/interactions/CircleButton.svelte";
     import TableDataCell from "../../html/table/TableDataCell.svelte";
-    import { getAppointments } from "../../../../api/appointment";
+    import {getAppointments} from "../../../../api/appointment";
     import TableHead from "../../html/table/TableHead.svelte";
     import Table from "../../html/table/Table.svelte";
-    import Modal from "../../html/modal/Modal.svelte";
-    import { view } from "../../../../services/view";
+    import Modal from "@/components/global/html/modal/Modal.svelte";
+    import {view} from "../../../../services/view";
     import moment from "moment/moment";
-    import { onMount } from "svelte";
+    import {onMount} from "svelte";
     import {
         faXmark,
         faPen,
         faWrench,
     } from "@fortawesome/free-solid-svg-icons";
+    import CloseToolbar from "@/components/global/html/modal/CloseToolbar.svelte";
 
     let dateObject = null;
     let appointments = [];
@@ -37,21 +38,15 @@
 </script>
 
 <Modal>
-    <div slot="left">
+    <CloseToolbar slot="toolbar">
+        <h1 slot="title">Calendario {getDate()}</h1>
+
         <CircleButton
-            class="text-red-300"
-            icon={faXmark}
-            on:click={() => ($view.component = null)}
-        />
-    </div>
-    <h1 slot="title">Calendario {getDate()}</h1>
-    <div slot="right">
-        <CircleButton
-            class="text-green-400"
+            class="circle-button text-save"
             icon={faPen}
             on:click={() => ($view.component = "EditOpeningHour")}
         />
-    </div>
+    </CloseToolbar>
 
     <div class="text-start py-1">
         <h2 class="font-bold uppercase">Citas programadas</h2>
@@ -62,7 +57,7 @@
                     Hora inicio
                 </TableHead>
                 <TableHead class="bg-green-200 text-start">Hora fin</TableHead>
-                <TableHead class="bg-green-200 text-start" />
+                <TableHead class="bg-green-200 text-start"/>
             </tr>
             {#each appointments as appointment}
                 <tr class="border-b">
@@ -78,7 +73,7 @@
                     <TableDataCell class="text-start p-2">
                         <CircleButton
                             icon={faWrench}
-                            class="bg-green-600 text-white"
+                            class="circle-button text-primary"
                             on:click={() => selectedPatient(appointment)}
                         />
                     </TableDataCell>

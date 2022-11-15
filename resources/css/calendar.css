@@ -1,0 +1,74 @@
+.calendar {
+    width: 100%;
+    border: 1px solid #505971;
+}
+
+.calendar-mini {
+    width: 80%;
+    font-size: small;
+    position: absolute;
+    bottom: 4rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.body {
+    display: grid;
+    grid-template-areas: "do lu ma mi ju vi sa";
+    background: #505971;
+    gap: 1px;
+}
+
+.calendar > .months {
+    display: grid;
+    grid-template-areas: "bleft tcenter bright";
+    grid-template-columns: 30px 0.35fr 30px;
+    padding: 0.7rem;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    width: 100%;
+    border-bottom: 1px solid #505971;
+    text-align: center;
+}
+
+.bright {
+    grid-area: bright;
+    justify-self: end;
+}
+
+.calendar > .body > .day {
+    background: white;
+    text-align: center;
+}
+
+.calendar > .body > .day > button {
+    padding: 0.8rem;
+    height: 100%;
+    width: 100%;
+}
+
+.calendar > .body > .day > button.day-mini {
+    padding: 0.1rem;
+}
+
+.opening-hours {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.calendar > .body > .day.invalid {
+    background: #b6cffa;
+}
+
+.calendar > .body > .day.greater-than {
+    background: #efcbcb;
+}
+
+.calendar > .body > .day.today {
+    color: red;
+}
+
+.calendar > .body > .day.selected {
+    background: #c8c8c8;
+}

@@ -3,9 +3,9 @@ import CreateOpeningHours from '../components/admin/agenda/opening-hours/Create.
 import ConfigurationIndex from '../components/admin/agenda/configurations/Index.svelte';
 import AppointmentsCreate from '../components/admin/appointments/Create.svelte';
 import AvailableTime from '../components/admin/appointments/AvailableTime.svelte';
-import OpeningHourModal from '../components/admin/layout/Calendar/AppointmentsData.svelte';
-import EditOpeningHour from '../components/admin/layout/Calendar/opening-hour/Edit.svelte';
-import AppointmentEdit from '../components/admin/layout/Calendar/appointment/Show.svelte';
+import OpeningHourModal from '../components/admin/layout/calendar-actions/AppointmentsData.svelte';
+import EditOpeningHour from '../components/admin/layout/calendar-actions/opening-hour/Edit.svelte';
+import AppointmentEdit from '../components/admin/layout/calendar-actions/appointment/Show.svelte';
 
 export const components = [
 
